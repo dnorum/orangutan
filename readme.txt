@@ -12,11 +12,13 @@ $ sudo -u postgres createuser --superuser $USER
 $ sudo -u postgres psql
 postgres=# \password [your username here]
 
-	It will prompt you for your passwords. Enter them, then exit postgres.
+	It will prompt you for your passwords. Enter them, then exit postgres. (I'm assuming that if you have already installed and are using postgres then you probably know how to modify these scripts as needed.)
 
 	Download the LibraryThing CSV dump into your ${project_dir}/resources/ folder. Convert it from tab-delimited into CSV, quoting empty strings. (I loaded it into OpenOffice Calc, then edited the filter settings when saving it as a CSV.) Note that the file path in the create_table.sql file is absolute at the moment.
 	Run the load_database.sh script to create the cluster_analysis database with the library table in it, with the LibraryThing database dump loaded into it.
-	Now to clean up the records.
+	Now to clean up the records - the primary focus here is on the fields containing the physical dimensions. Depending on your collection, it may be interesting to break it out further based on tags or other cataloguing information, but I'm shooting for the minimum working example which, in my case, dovetails nicely with the need to get bookshelves designed and built before I start moving books to my new house.
+	(Note that all of the following is assuming the column names as specified in create_table.sql. Furthermore, the following bit is an explanation of the reasoning behind the various scrubs / conversions I settled on - depending on the data sources / data entry of another collection, some/all/none of this may be needed.)
+	(Also note that inches/feet/pounds are used throughout because a) 'MURICA and b) I find it far easier for everyday, non-scientific/engineering use.)
 
 
 7) Script to clean up library records
