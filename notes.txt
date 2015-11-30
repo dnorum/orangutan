@@ -15,3 +15,5 @@ $ cd cluster_shelving
 $ git init
 $ git add notes.txt
 $ git commit -m "Adds notes file with setup commands so far."
+$ git add links.txt
+$ git commit -m "Updates notes and adds setup links."
