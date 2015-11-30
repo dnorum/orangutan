@@ -1,9 +1,24 @@
-1) Install PostgreSQL and R
-2) Download LibraryThing CSV dump as library.csv into ${project_dir}/resources/
-3) Set up PostgreSQL
-4) Put together setup script for installations
-5) Put together setup script for Postgres
-6) Script to load library.csv into Postgres
+	I started off by installing Git (unnecessary for running this), PostgreSQL, and R as described in the links for those packages.
+
+$ sudo apt-get update
+$ sudo apt-get install git-all
+$ sudo apt-get install postgresql postgresql-contrib
+$ sudo apt-get install pgadmin3
+$ sudo apt-get install r-base
+
+	Next, I set up postgres with default usernames and passwords. This isn't completely necessary, but it's what I did and so what the later scripts assume. It should be relatively easy to change the scripts so that they don't assume this, if you want. If you don't, then:
+
+$ sudo -u postgres createuser --superuser $USER
+$ sudo -u postgres psql
+postgres=# \password [your username here]
+
+	It will prompt you for your passwords. Enter them, then exit postgres.
+
+	Download the LibraryThing CSV dump into your ${project_dir}/resources/ folder. Convert it from tab-delimited into CSV, quoting empty strings. (I loaded it into OpenOffice Calc, then edited the filter settings when saving it as a CSV.) Note that the file path in the create_table.sql file is absolute at the moment.
+	Run the load_database.sh script to create the cluster_analysis database with the library table in it, with the LibraryThing database dump loaded into it.
+	Now to clean up the records.
+
+
 7) Script to clean up library records
 8) Summary scripts to generate stats and visuals
 9) Script to dump out library records with dimensional information
