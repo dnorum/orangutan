@@ -7,8 +7,7 @@ $ git config --global user.name "Don Norum"
 $ git config --global user.email don@donnorum.com
 $ git config --global core.editor gedit
 $ mkdir projects
-$ cd projects
-$ mkdir git
+$ cd projects$ mkdir git
 $ cd git
 $ mkdir cluster_shelving
 $ cd cluster_shelving
@@ -17,3 +16,17 @@ $ git add notes.txt
 $ git commit -m "Adds notes file with setup commands so far."
 $ git add links.txt
 $ git commit -m "Updates notes and adds setup links."
+$ sudo -u postgres createuser --superuser $USER
+$ sudo -u postgres psql
+postgres=# \password ${USER}
+[enter passwords]
+postgres=# \q
+$ sudo -u postgres createdb $USER
+$ sudo nano /etc/postgresql/9.3/main/pg_hba.conf
+CHANGE
+# Database administrative login by Unix Domain Socket
+local all postgres peer
+TO
+local all postgres md5
+$ chmod +x ./load_database.sh
+
