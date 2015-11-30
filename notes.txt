@@ -1,0 +1,17 @@
+$ sudo apt-get update
+$ sudo apt-get install git-all
+$ sudo apt-get install postgresql postgresql-contrib
+$ sudo apt-get install pgadmin3
+$ sudo apt-get install r-base
+$ git config --global user.name "Don Norum"
+$ git config --global user.email don@donnorum.com
+$ git config --global core.editor gedit
+$ mkdir projects
+$ cd projects
+$ mkdir git
+$ cd git
+$ mkdir cluster_shelving
+$ cd cluster_shelving
+$ git init
+$ git add notes.txt
+$ git commit -m "Adds notes file with setup commands so far."
