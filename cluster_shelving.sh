@@ -20,3 +20,7 @@ psql $database -f clean_and_convert_length.sql > /dev/null 2>&1
 echo "Length (depth) converted into numeric, Imperial values."
 psql $database -f clean_and_convert_thickness.sql > /dev/null 2>&1
 echo Thickness converted into numeric, Imperial values.
+
+# Standardize the dimensions to have either all or none for each record.
+psql $database -f standardize_dimensions.sql > /dev/null 2>&1
+echo "Dimensions standardized to all or nothing (height-length-thickness)."
