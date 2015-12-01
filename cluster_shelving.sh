@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Define the name of the database to be used. Note that the first postgres
 # commands will drop and recreate this database.
@@ -9,9 +9,14 @@ sudo -u $USER dropdb --if-exists $database
 sudo -u $USER createdb $database
 echo "$database dropped and (re)created."
 
+# Create the table in the database to hold the LibraryThing dump file's data.
+psql $database -f create_table.sql > /dev/null 2>&1
+echo Table created in $database.
+
 # Load the LibraryThing dump file (converted to CSV) into the database.
-psql $database -f create_and_load_table.sql > /dev/null 2>&1
-echo "LibraryThing dump file loaded into $database."
+n_records_loaded=$(psql $database -f load_table.sql)
+n_records_loaded=${n_records_loaded//[a-zA-Z ]/}
+echo "${n_records_loaded} records from LibraryThing dump file loaded into $database."
 
 # Clean up the dimensional fields into standard format and Imperial units.
 psql $database -f clean_and_convert_height.sql > /dev/null 2>&1
