@@ -79,6 +79,28 @@ n_no_dimensions=${n_no_dimensions// /}
 # Status update.
 echo "${n_dimensions} records with height/length/thickness, ${n_no_dimensions} records without."
 
+# Clear out the working file directory if it exists.
+[ -d working ] && { rm -rf working; echo "Existing /working directory removed."; }
+
+# Create the /plots directory.
+mkdir working
+
+# Allow _all_ users write access. Note that this is not optimum, but I've not
+# taken the time to find the postgres-specific setting.
+chmod a+w ./working
+
+# Status update.
+echo "Created /working directory."
+
+# Output raw data with book dimensions and record the number of rows imported.
+n_records_dumped=$(psql $database -f output_dimensions.sql)
+
+# Scrub the output of the postgres command to just the number of rows dumped.
+n_records_dumped=${n_records_dumped//[a-zA-Z ]/}
+
+# Status update.
+echo "${n_records_dumped} records from public.library with dimensions dumped for plotting."
+
 # Get ready to output first-pass summary plots.
 # Clear out the /plots directory (if it exists).
 [ -d plots ] && { rm -rf plots; echo "Existing /plots directory removed."; }
