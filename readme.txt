@@ -20,7 +20,7 @@ postgres=# \password [your username here]
 	(Note that all of the following is assuming the column names as specified in create_and_load_table.sql. Furthermore, the following bit is an explanation of the reasoning behind the various scrubs / conversions I settled on - depending on the data sources / data entry of another collection, some/all/none of this may be needed.)
 	(Also note that inches/feet/pounds are used throughout because a) 'MURICA and b) I find it far easier for everyday, non-scientific/engineering use.)
 
-
+MAKE SHELL SCRIPT MORE VERBOSE - NUMBER OF RECORDS, FOR INSTANCE.
 7) Script to clean up library records
 8) Summary scripts to generate stats and visuals
 9) Script to dump out library records with dimensional information
