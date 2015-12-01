@@ -2,16 +2,16 @@
 -- possible ambiguity, so that the final set of scrubbed dimensions either has
 -- all three of height, length (width), and thickness; or none of them.
 UPDATE library
-SET height = NULL
-WHERE		"length" IS NULL
-	OR	thickness IS NULL;
+SET height_scrubbed = NULL
+WHERE		length_scrubbed IS NULL
+	OR	thickness_scrubbed IS NULL;
 
 UPDATE library
-SET "length" = NULL
-WHERE		height IS NULL
-	OR	thickness IS NULL;
+SET length_scrubbed = NULL
+WHERE		height_scrubbed IS NULL
+	OR	thickness_scrubbed IS NULL;
 
 UPDATE library
-SET thickness = NULL
-WHERE		height IS NULL
-	OR	"length" IS NULL;
+SET thickness_scrubbed = NULL
+WHERE		height_scrubbed IS NULL
+	OR	length_scrubbed IS NULL;
