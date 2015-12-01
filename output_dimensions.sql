@@ -12,4 +12,5 @@ TO
 	'/home/don/projects/git/cluster_shelving/working/book_dimensions.csv'
 (	FORMAT csv
 ,	DELIMITER ','
+,	HEADER
 ,	NULL ''	);
