@@ -20,10 +20,18 @@ postgres=# \password [your username here]
 	(Note that all of the following is assuming the column names as specified in create_and_load_table.sql. Furthermore, the following bit is an explanation of the reasoning behind the various scrubs / conversions I settled on - depending on the data sources / data entry of another collection, some/all/none of this may be needed.)
 	(Also note that inches/feet/pounds are used throughout because a) 'MURICA and b) I find it far easier for everyday, non-scientific/engineering use.)
 
-MAKE SHELL SCRIPT MORE VERBOSE - NUMBER OF RECORDS, FOR INSTANCE.
-7) Script to clean up library records
+
+
+
+
+7) Script to clean up library records - weight
+9) Script to dump out library records with dimensional information (height, length, thickness, weight, primary ID)
 8) Summary scripts to generate stats and visuals
-9) Script to dump out library records with dimensional information
+	averages, standard deviations of all. N_null, n_non_null.
+	Histograms of each individually
+	Scatterplot/heat map of height-length
+	Histogram of linear density
+
 10) R script for cluster analysis
 11) Automatic / parametrized R script version (in full stack)
 12) Load R results back into database
