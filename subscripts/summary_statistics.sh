@@ -39,6 +39,19 @@ average_thickness=${average_thickness// /}
 stddev_thickness=$(psql $database -t -c "SELECT stddev_samp(thickness_scrubbed) FROM library WHERE thickness_scrubbed IS NOT NULL")
 stddev_thickness=${stddev_thickness// /}
 
+# Record the statistics for the weight (trimming whitespace).
+min_weight=$(psql $database -t -c "SELECT min(weight_scrubbed) FROM library WHERE weight_scrubbed IS NOT NULL")
+min_weight=${min_weight// /}
+
+max_weight=$(psql $database -t -c "SELECT max(weight_scrubbed) FROM library WHERE weight_scrubbed IS NOT NULL")
+max_weight=${max_weight// /}
+
+average_weight=$(psql $database -t -c "SELECT avg(weight_scrubbed) FROM library WHERE weight_scrubbed IS NOT NULL")
+average_weight=${average_weight// /}
+
+stddev_weight=$(psql $database -t -c "SELECT stddev_samp(weight_scrubbed) FROM library WHERE weight_scrubbed IS NOT NULL")
+stddev_weight=${stddev_weight// /}
+
 # Summary output.
 echo "Heights of Books, in Inches:"
 printf "\tMinimum: ${min_height}\n" # Used for \t tabs.
@@ -57,4 +70,10 @@ printf "\tMinimum: ${min_thickness}\n"
 printf "\tMaximum: ${max_thickness}\n"
 printf "\tAverage: ${average_thickness}\n"
 printf "\tStandard Deviation: ${stddev_thickness}\n"
+echo
+echo "Weights of Books, in Pounds:"
+printf "\tMinimum: ${min_weight}\n" # Used for \t tabs.
+printf "\tMaximum: ${max_weight}\n"
+printf "\tAverage: ${average_weight}\n"
+printf "\tStandard Deviation: ${stddev_weight}\n"
 echo

@@ -4,6 +4,7 @@ COPY
 		,	height_scrubbed AS "Height (in)"
 		,	length_scrubbed AS "Width (in)"
 		,	thickness_scrubbed AS "Thickness (in)"
+		,	weight_scrubbed AS "Weight (lb)"
 		FROM
 			library
 		WHERE

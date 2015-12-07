@@ -17,3 +17,7 @@ SET height_scrubbed =
 		THEN	height::DOUBLE PRECISION
 		ELSE	NULL::DOUBLE PRECISION
 		END;
+
+UPDATE library
+SET height_scrubbed = NULL
+WHERE height_scrubbed NOT BETWEEN ${height_min} AND ${height_max};

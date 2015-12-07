@@ -6,6 +6,18 @@ DIR=$(dirname "$(readlink -f "$0")")
 # Define the name of the database to be used.
 database="cluster_analysis"
 
+# Define the minimum and maximum values considered plausible for each of the
+# physical dimensions. (Inches and pounds.) Note that these may need to be
+# adjusted as the script is run iteratively.
+height_min=0.0
+height_max=1000 # N/A
+length_min=0.0
+length_max=1000 # N/A
+thickness_min=0.0
+thickness_max=1000 # N/A
+weight_min=0.0
+weight_max=10000
+
 # Newline to set off script output.
 echo
 

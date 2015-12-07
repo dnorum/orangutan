@@ -17,3 +17,7 @@ SET length_scrubbed =
 		THEN	"length"::DOUBLE PRECISION
 		ELSE	NULL::DOUBLE PRECISION
 		END;
+
+UPDATE library
+SET length_scrubbed = NULL
+WHERE length_scrubbed NOT BETWEEN ${length_min} AND ${length_max};
