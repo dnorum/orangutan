@@ -8,7 +8,9 @@ COPY
 		FROM
 			library
 		WHERE
-			height_scrubbed IS NOT NULL	)
+			height_scrubbed IS NOT NULL
+		AND	length_scrubbed IS NOT NULL
+		AND	thickness_scrubbed IS NOT NULL	)
 TO
 	'${DIR}/working/book_dimensions.csv'
 (	FORMAT csv
