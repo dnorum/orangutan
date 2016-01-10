@@ -24,3 +24,6 @@ echo "Book thicknesses plotted to $DIR/plots/book_thicknesses.ps"
 
 gnuplot -e "DIR='${DIR}'" -e "n=${n_intervals}" -e "max=${max_weight}" -e "min=${min_weight}" ${DIR}/subscripts/gnuplot/weight.gp
 echo "Book weights plotted to $DIR/plots/book_weights.ps"
+
+gnuplot -e "DIR='${DIR}'" -e "n=${n_intervals}" -e "maxh=${max_height}" -e "minh=${min_height}" -e "maxl=${max_length}" -e "minl=${min_length}" ${DIR}/subscripts/gnuplot/height_length.gp
+echo "Book heights and lengths plotted to $DIR/plots/book_heights_lengths.ps"
