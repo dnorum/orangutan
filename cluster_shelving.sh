@@ -18,6 +18,9 @@ thickness_max=1000 # N/A
 weight_min=0.0
 weight_max=10000
 
+# Define the settings for the summary histograms.
+n_intervals=100
+
 # Newline to set off script output.
 echo
 
@@ -38,3 +41,8 @@ source ./subscripts/summary_statistics.sh
 # Create a /working directory and output the dimensions for plotting and cluster
 # analysis.
 source ./subscripts/output_dimensions.sh
+
+# Output the first set of plots summarizing the dimensions.
+source ./subscripts/summary_plots.sh
+
+
