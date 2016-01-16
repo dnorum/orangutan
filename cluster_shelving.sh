@@ -10,9 +10,9 @@ database="cluster_analysis"
 # physical dimensions. (Inches and pounds.) Note that these may need to be
 # adjusted as the script is run iteratively.
 height_min=0.0
-height_max=36 # N/A
+height_max=12 # N/A
 length_min=0.0
-length_max=24 # N/A
+length_max=10 # N/A
 thickness_min=0.0
 thickness_max=12 # N/A
 weight_min=0.0
