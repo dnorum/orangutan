@@ -9,9 +9,9 @@ database="cluster_analysis"
 # Define the minimum and maximum values considered plausible for each of the
 # physical dimensions. (Inches and pounds.) Note that these may need to be
 # adjusted as the script is run iteratively.
-height_min=0.0
+height_min=4
 height_max=12 # N/A
-length_min=0.0
+length_min=3
 length_max=10 # N/A
 thickness_min=0.0
 thickness_max=12 # N/A
