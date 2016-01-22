@@ -31,7 +31,7 @@ COPY
 			height_scrubbed IS NOT NULL
 		AND	length_scrubbed IS NOT NULL	)
 TO
-	'${DIR}/r/book_dimensions.csv'
+	'${DIR}/r/kmeans_data.csv'
 (	FORMAT csv
 ,	DELIMITER ','
 ,	HEADER
