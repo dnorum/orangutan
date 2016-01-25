@@ -2,4 +2,5 @@
 /r/*
 /resources/*
 /working/*
+.project
 *.ps
