@@ -1,16 +1,5 @@
 #!/bin/bash
 
-# Get ready to output first-pass summary plots.
-# Clear out the /plots directory (if it exists).
-[ -d ${DIR}/plots ] && { rm -rf ${DIR}/plots; echo "Existing /plots directory removed."; }
-
-# Create the /plots directory.
-mkdir ${DIR}/plots
-
-# Status update.
-echo "Created /plots directory."
-echo
-
 # Invoke the plotting scripts for each of the dimensions - height, length 
 # (width), thickness, and weight.
 gnuplot -e "DIR='${DIR}'" -e "n=${n_intervals}" -e "max=${max_height}" -e "min=${min_height}" ${DIR}/subscripts/gnuplot/height.gp

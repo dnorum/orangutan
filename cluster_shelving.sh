@@ -39,6 +39,12 @@ n_intervals=100
 # Newline to set off script output.
 echo
 
+# Create the directory structure (within DIR) needed for creating, copying, and
+# storing various files.
+source ./subscripts/setup_directories.sh
+
+
+
 # Drop and recreate the database specified above.
 source ./subscripts/create_database.sh
 
