@@ -1,5 +1,9 @@
 #!/bin/bash
 
+###################
+### DEFINITIONS ###
+###################
+
 # Define the directory location of the script.
 DIR=$(dirname "$(readlink -f "$0")")
 
@@ -9,17 +13,28 @@ database="cluster_analysis"
 # Define the minimum and maximum values considered plausible for each of the
 # physical dimensions. (Inches and pounds.) Note that these may need to be
 # adjusted as the script is run iteratively.
-height_min=4
-height_max=12 # N/A
-length_min=3
-length_max=10 # N/A
+
+# If one of the height / length / thickness values is invalid, all three will
+# be NULLed out.
+height_min=4.0
+height_max=12.0
+length_min=3.0
+length_max=10.0
 thickness_min=0.0
-thickness_max=12 # N/A
+thickness_max=12.0
+
+# These limits only affect the weight - invalid weights will not affect the
+# height / length / thickness and vice versa.
 weight_min=0.0
-weight_max=25
+weight_max=25.0
 
 # Define the settings for the summary histograms.
 n_intervals=100
+
+
+########################
+### Start of scripts ###
+########################
 
 # Newline to set off script output.
 echo
