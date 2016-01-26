@@ -2,23 +2,15 @@
 
 ###########################################################
 # DIR/plots, for storing the plots created by the scripts #
+# DIR/r, used by the K-means cluster analysis R script    #
 ###########################################################
 
-# Clear out the /plots directory (if it exists).
-[ -d ${DIR}/plots ] && { rm -rf ${DIR}/plots; echo "Existing /plots directory removed."; }
+for subdir in plots r
+do
+	# Clear out DIR/subdir (if it exists)
+	[ -d ${DIR}/$subdir ] && { rm -rf ${DIR}/$subdir; echo "Existing /$subdir directory removed."; }
 
-# Create the /plots directory.
-mkdir ${DIR}/plots
-echo "Created /plots directory."
-
-
-########################################################
-# DIR/r, used by the K-means cluster analysis R script #
-########################################################
-
-# Clear out the /r directory (if it exists).
-[ -d ${DIR}/r ] && { rm -rf ${DIR}/r; echo "Existing /r directory removed."; }
-
-# Create the /r directory.
-mkdir ${DIR}/r
-echo "Created /r directory."
+	# Create DIR/subdir
+	mkdir ${DIR}/$subdir
+	echo "Created /$subdir subdirectory."
+done
