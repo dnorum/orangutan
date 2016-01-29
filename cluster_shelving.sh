@@ -43,16 +43,15 @@ echo
 # storing various files.
 source ./subscripts/setup_directories.sh
 
+# Setup the database to use for the analysis and load in the LibraryThing data.
+source ./subscripts/setup_database.sh
 
 
-# Drop and recreate the database specified above.
-source ./subscripts/create_database.sh
 
-# Create the table public.library and load in the LibraryThing database file.
-source ./subscripts/load_librarything.sh
 
-# Clean up the dimensions into a standard format and Imperial units.
-source ./subscripts/clean_records.sh
+
+
+
 
 # Record the summary statistics - min, max, average, and standard deviation -
 # for each of the book dimensions. These will also be used to create histograms
