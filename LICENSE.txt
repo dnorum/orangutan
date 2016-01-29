@@ -10,6 +10,11 @@ English-law principle of "that which is not forbidden is allowed" - I've found
 nothing against their use here, with citation, and if informed of such will move
 swiftly to remove them.
 
+Furthermore, individual elements of this project have been greatly informed by
+questions and answers posted on StackOverflow and various other places
+accessible to Google. So thanks, y'all. Extended cognition and the hive mind
+FTW.
+
 The MIT License (MIT)
 
 Copyright (c) 2016 Don Norum
