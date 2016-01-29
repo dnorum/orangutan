@@ -1,5 +1,51 @@
 #!/bin/bash
 
+# Drop (if it exists) and recreate the database specified in the main
+# cluster_shelving.sh script.
+if psql $database -c '\q' 2>&1; then
+	sudo -u $USER dropdb --if-exists $database
+	sudo -u $USER createdb $database
+	echo "$database dropped and recreated."
+else
+	sudo -u $USER createdb $database
+	echo "$database created."
+fi
+echo
+
+# Create the table (public.library) to hold the LibraryThing dump file's data.
+psql $database -f ${DIR}/sql/create_table.sql > /dev/null 2>&1
+
+# Status update.
+echo "public.library created in $database."
+
+# Load the LibraryThing dump file into the database and record the number of
+# rows imported.
+n_records_loaded=$(psql $database -c "$(sed -e "s/\${DIR}/${DIR}/g" ${DIR}/sql/load_library.sql)")
+
+# Scrub the output of the postgres command to just the number of rows loaded.
+n_records_loaded=${n_records_loaded//[a-zA-Z ]/}
+
+# Status update.
+echo "${n_records_loaded} records from LibraryThing dump file loaded into public.library."
+echo
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Clean up the dimensions into a standard format and Imperial units.
+
+
+
 
 # Clean up the height into a standard format and Imperial units and record the
 # number of non-NULL values that are produced.
