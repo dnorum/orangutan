@@ -39,3 +39,8 @@ postgres=# \password [your username here]
 14) Generate final stats and calculations, output CSV data for graphs
 15) Gnuplot graphs
 16) Package everything up
+
+Git - https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
+PostgreSQL - https://help.ubuntu.com/community/PostgreSQL
+R - www.r-bloggers.com/download-and-install-r-in-ubuntu
+LibraryThing export - www.librarything.com/export.php?export_type=tsv
