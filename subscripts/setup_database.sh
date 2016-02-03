@@ -33,12 +33,14 @@ echo
 for dimension in height length thickness
 do
 
-	# Clean up the dimension into a standard format and Imperial units and
-	# record the number of non-NULL values that are produced. Yes, this is
-	# a hideously inefficient invocation inside a loop, but otherwise it's
-	# a nested eval echo construct that I've not yet wrapped my head around.
+	# Clean up the dimension into a standard format and Imperial units. Yes,
+	# this is a hideously inefficient invocation inside a loop, but
+	# otherwise it's a nested eval echo construct that I've not yet wrapped
+	# my head around.
 	psql $database -c "$(sed -e "s/\${height_min}/${height_min}/g" -e "s/\${height_max}/${height_max}/g" -e "s/\${length_min}/${length_min}/g" -e "s/\${length_max}/${length_max}/g" -e "s/\${thickness_min}/${thickness_min}/g" -e "s/\${thickness_max}/${thickness_max}/g" -e "s/\${weight_min}/${weight_min}/g" -e "s/\${weight_max}/${weight_max}/g" ${DIR}/subscripts/sql/clean_and_convert_${dimension}.sql)" > /dev/null 2>&1
-n_dimension_non_null=$(psql $database -t -c "SELECT COUNT(*) FROM library WHERE ${dimension}_scrubbed IS NOT NULL")
+
+	# Record the number of non-NULL values that are produced.
+	n_dimension_non_null=$(psql $database -t -c "SELECT COUNT(*) FROM library WHERE ${dimension}_scrubbed IS NOT NULL")
 
 	# Trim whitespace.
 	n_dimension_non_null=${n_dimension_non_null// /}
@@ -48,32 +50,27 @@ n_dimension_non_null=$(psql $database -t -c "SELECT COUNT(*) FROM library WHERE 
 
 done
 
-# Standardize the dimensions to have either all or none for each record. Note
-# that weight is treated differently because a book could very well have its
-# height-length-thickness recorded and no weight, or vice versa, but it doesn't
-# make nearly as much sense to have a book that has, say, thickness and length
-# but no width.
-psql $database -c ${DIR}/subscripts/sql/standardize_dimensions.sql > /dev/null 2>&1
-echo "Dimensions standardized to all or nothing (height-length-thickness)."
-
-# Record how many records have all of their dimensions, no dimensions.
-n_dimensions=$(psql $database -t -c "SELECT COUNT(*) FROM library WHERE thickness_scrubbed IS NOT NULL")
-n_no_dimensions=$(psql $database -t -c "SELECT COUNT(*) FROM library WHERE thickness_scrubbed IS NULL")
+# Record how many records have all of their dimensions, some dimensions, no
+# dimensions. (Excluding weight.)
+n_all_dimensions=$(psql $database -t -c "$(sed -e "s/\${DIR}/${DIR}/g" ${DIR}/sql/count_all_dimensions.sql)")
+n_some_dimensions=$(psql $database -t -c "$(sed -e "s/\${DIR}/${DIR}/g" ${DIR}/sql/count_some_dimensions.sql)")
+n_no_dimensions=$(psql $database -t -c "$(sed -e "s/\${DIR}/${DIR}/g" ${DIR}/sql/count_no_dimensions.sql)")
 
 # Trim whitespace.
-n_dimensions=${n_dimensions// /}
+n_all_dimensions=${n_all_dimensions// /}
+n_some_dimensions=${n_some_dimensions// /}
 n_no_dimensions=${n_no_dimensions// /}
 
 # Status update.
-echo "${n_dimensions} records with height/length/thickness, ${n_no_dimensions} records without."
+echo "${n_all_dimensions} records with height/length/thickness, ${n_some_dimensions} records with at least one but not all, and ${n_no_dimensions} records without."
 echo
 
 # Record how many records have all of their dimensions as well as weight.
-n_dimensions_weight=$(psql $database -t -c "SELECT COUNT(*) FROM library WHERE thickness_scrubbed IS NOT NULL AND weight_scrubbed IS NOT NULL")
+n_all_dimensions_plus_weight=$(psql $database -t -c "$(sed -e "s/\${DIR}/${DIR}/g" ${DIR}/sql/count_all_dimensions_plus_weight.sql)")
 
 # Trim whitespace.
-n_dimensions_weight=${n_dimensions_weight// /}
+n_all_dimensions_plus_weight=${n_all_dimensions_plus_weight// /}
 
 # Status update.
-echo "${n_dimensions_weight} records with height/length/thickness and weight."
+echo "${n_all_dimensions_plus_weight} records with height/length/thickness and weight."
 echo
