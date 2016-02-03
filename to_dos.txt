@@ -1,0 +1,8 @@
+1) Test scripts on laptop.
+2) Fix bugs revealed in 1).
+3) Add query for include flag.
+4) Add flag to script for requiring thickness.
+5) Report on include flag vs. dimensions.
+6) Output CSV.
+7) Update commenting throughout.
+8) PART TWO!
