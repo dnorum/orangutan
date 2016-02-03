@@ -43,4 +43,5 @@ postgres=# \password [your username here]
 Git - https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
 PostgreSQL - https://help.ubuntu.com/community/PostgreSQL
 R - www.r-bloggers.com/download-and-install-r-in-ubuntu
+Cluster Analysis in R - http://www.mattpeeples.net/kmeans.html
 LibraryThing export - www.librarything.com/export.php?export_type=tsv
