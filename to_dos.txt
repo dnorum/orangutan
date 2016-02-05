@@ -1,4 +1,4 @@
-1) Test scripts on laptop.
+1) Clean up everything.
 2) Fix bugs revealed in 1).
 3) Add query for include flag.
 4) Add flag to script for requiring thickness.
