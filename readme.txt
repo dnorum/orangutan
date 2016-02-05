@@ -11,8 +11,8 @@ easier for everyday, non-scientific/engineering use.
 query to create a flag to for including books in the cluster analysis. This can
 be based off of a specific tag, collection, author, etc. It reports how many
 books are marked for inclusion and how many of these have valid dimensions. (To
-be included a book must have a valid height and width / length; thickness is
-optional but useful for shelf-length planning.)
+be included a book must have a valid height and width; thickness is optional but
+useful for shelf-length planning.)
 	The books that meet these criteria are then dumped out into a CSV file ready
 to be run through the R cluster-analysis script.
 

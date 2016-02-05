@@ -14,17 +14,17 @@ database="cluster_analysis"
 # physical dimensions. (Inches and pounds.) Note that these may need to be
 # adjusted as the script is run iteratively.
 
-# If one of the height / length / thickness values is invalid, all three will
+# If one of the height / width / thickness values is invalid, all three will
 # be NULLed out.
 height_min=4.0
 height_max=12.0
-length_min=3.0
-length_max=10.0
+width_min=3.0
+width_max=10.0
 thickness_min=0.0
 thickness_max=12.0
 
 # These limits only affect the weight - invalid weights will not affect the
-# height / length / thickness and vice versa.
+# height / width / thickness and vice versa.
 weight_min=0.0
 weight_max=25.0
 

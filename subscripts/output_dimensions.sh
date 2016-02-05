@@ -17,7 +17,7 @@ echo "Created /working directory."
 # sed is used to make the directory substitution in the SQL source file - the
 # bash regex replace is used so that the /s in the directory path don't break
 # the sed regex.
-n_records_dumped=$(psql $database -c "$(sed -e "s/\${DIR}/${DIR//\//\\\/}/g" -e "s/\${max_height}/${max_height}/g" -e "s/\${min_height}/${min_height}/g" -e "s/\${max_length}/${max_length}/g" -e "s/\${min_length}/${min_length}/g" -e "s/\${n_intervals}/${n_intervals}/g" ${DIR}/subscripts/sql/output_dimensions.sql)")
+n_records_dumped=$(psql $database -c "$(sed -e "s/\${DIR}/${DIR//\//\\\/}/g" -e "s/\${max_height}/${max_height}/g" -e "s/\${min_height}/${min_height}/g" -e "s/\${max_width}/${max_length}/g" -e "s/\${min_length}/${min_length}/g" -e "s/\${n_intervals}/${n_intervals}/g" ${DIR}/subscripts/sql/output_dimensions.sql)")
 
 # Scrub the output of the postgres command to just the number of rows dumped.
 n_records_dumped=${n_records_dumped//[a-zA-Z ]/}
