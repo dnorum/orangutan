@@ -13,18 +13,18 @@ average_height=${average_height// /}
 stddev_height=$(psql $database -t -c "SELECT stddev_samp(height_scrubbed) FROM library WHERE height_scrubbed IS NOT NULL")
 stddev_height=${stddev_height// /}
 
-# Record the statistics for the length/width (trimming whitespace).
-min_length=$(psql $database -t -c "SELECT min(length_scrubbed) FROM library WHERE length_scrubbed IS NOT NULL")
-min_length=${min_length// /}
+# Record the statistics for the width (trimming whitespace).
+min_width=$(psql $database -t -c "SELECT min(width_scrubbed) FROM library WHERE width_scrubbed IS NOT NULL")
+min_width=${min_width// /}
 
-max_length=$(psql $database -t -c "SELECT max(length_scrubbed) FROM library WHERE length_scrubbed IS NOT NULL")
-max_length=${max_length// /}
+max_width=$(psql $database -t -c "SELECT max(width_scrubbed) FROM library WHERE width_scrubbed IS NOT NULL")
+max_width=${max_width// /}
 
-average_length=$(psql $database -t -c "SELECT avg(length_scrubbed) FROM library WHERE length_scrubbed IS NOT NULL")
-average_length=${average_length// /}
+average_width=$(psql $database -t -c "SELECT avg(width_scrubbed) FROM library WHERE width_scrubbed IS NOT NULL")
+average_width=${average_width// /}
 
-stddev_length=$(psql $database -t -c "SELECT stddev_samp(length_scrubbed) FROM library WHERE length_scrubbed IS NOT NULL")
-stddev_length=${stddev_length// /}
+stddev_width=$(psql $database -t -c "SELECT stddev_samp(width_scrubbed) FROM library WHERE width_scrubbed IS NOT NULL")
+stddev_width=${stddev_width// /}
 
 # Record the statistics for the thickness (trimming whitespace).
 min_thickness=$(psql $database -t -c "SELECT min(thickness_scrubbed) FROM library WHERE thickness_scrubbed IS NOT NULL")
@@ -59,11 +59,11 @@ printf "\tMaximum: ${max_height}\n"
 printf "\tAverage: ${average_height}\n"
 printf "\tStandard Deviation: ${stddev_height}\n"
 echo
-echo "Lengths (Widths) of Books, in Inches:"
-printf "\tMinimum: ${min_length}\n"
-printf "\tMaximum: ${max_length}\n"
-printf "\tAverage: ${average_length}\n"
-printf "\tStandard Deviation: ${stddev_length}\n"
+echo "Widths of Books, in Inches:"
+printf "\tMinimum: ${min_width}\n"
+printf "\tMaximum: ${max_width}\n"
+printf "\tAverage: ${average_width}\n"
+printf "\tStandard Deviation: ${stddev_width}\n"
 echo
 echo "Thicknesses of Books, in Inches:"
 printf "\tMinimum: ${min_thickness}\n"
