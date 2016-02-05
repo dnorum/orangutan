@@ -17,7 +17,3 @@ SET width_scrubbed =
 		THEN	width::DOUBLE PRECISION
 		ELSE	NULL::DOUBLE PRECISION
 		END;
-
-UPDATE library
-SET width_scrubbed = NULL
-WHERE width_scrubbed NOT BETWEEN ${width_min} AND ${width_max};
