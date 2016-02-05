@@ -10,24 +10,6 @@ DIR=$(dirname "$(readlink -f "$0")")
 # Define the name of the database to be used.
 database="cluster_analysis"
 
-# Define the minimum and maximum values considered plausible for each of the
-# physical dimensions. (Inches and pounds.) Note that these may need to be
-# adjusted as the script is run iteratively.
-
-# If one of the height / width / thickness values is invalid, all three will
-# be NULLed out.
-height_min=4.0
-height_max=12.0
-width_min=3.0
-width_max=10.0
-thickness_min=0.0
-thickness_max=12.0
-
-# These limits only affect the weight - invalid weights will not affect the
-# height / width / thickness and vice versa.
-weight_min=0.0
-weight_max=25.0
-
 # Define the settings for the summary histograms.
 n_intervals=100
 
@@ -49,23 +31,20 @@ source ./subscripts/setup_resources.sh
 # Setup the database to use for the analysis and load in the LibraryThing data.
 source ./subscripts/setup_database.sh
 
+# If you want to NULL out-of-bounds dimensions, include this subscript.
+source ./subscripts/out_of_bounds_dimensions.sh
 
-
-
-
-
-
+# Create the flag on each record to indicate whether or not to include it in the
+# cluster analysis.
+source ./subscripts/flag_for_analysis.sh
 
 # Record the summary statistics - min, max, average, and standard deviation -
 # for each of the book dimensions. These will also be used to create histograms
 # summarizing the data.
 source ./subscripts/summary_statistics.sh
 
-# Create a /working directory and output the dimensions for plotting and cluster
-# analysis.
-source ./subscripts/output_dimensions.sh
-
-# Output the first set of plots summarizing the dimensions.
+# Output the first sets of plots summarizing the dimensions.
 source ./subscripts/summary_plots.sh
 
-
+# Output the dimensions of the selected books for plotting and cluster analysis.
+source ./subscripts/output_dimensions.sh
