@@ -33,10 +33,7 @@ echo
 for dimension in height width thickness
 do
 
-	# Clean up the dimension into a standard format and Imperial units. Yes,
-	# this is a hideously inefficient invocation inside a loop, but
-	# otherwise it's a nested eval echo construct that I've not yet wrapped
-	# my head around.
+	# Clean up the dimension into a standard format and Imperial units.
 	psql $database -c "$(sed ${DIR}/sql/clean_and_convert_${dimension}.sql)" > /dev/null 2>&1
 
 	# Record the number of non-NULL values that are produced.
