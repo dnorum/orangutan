@@ -3,13 +3,13 @@
 # min = Minimum height
 
 reset
-set title 'Distribution of Book Lengths'
-set xlabel 'Length [in]'
+set title 'Distribution of Book Widths'
+set xlabel 'Width [in]'
 set ylabel 'Number of Books'
 set timestamp # turn on a date/time indicator
 set datafile separator ","
 set term postscript
-set output DIR."/plots/book_lengths.ps"
+set output DIR."/plots/book_widths.ps"
 width=(max-min)/n # Interval width
 # Define the function used to map a value to an interval
 hist(x,width)=width*floor(x/width)+width/2.0

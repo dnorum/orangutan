@@ -24,7 +24,7 @@ CREATE TABLE library (
 ,	weight TEXT
 ,	height TEXT
 ,	thickness TEXT
-,	"length" TEXT
+,	width TEXT
 ,	dimensions TEXT
 ,	page_count TEXT
 ,	lccn TEXT
