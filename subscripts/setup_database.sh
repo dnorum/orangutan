@@ -52,9 +52,9 @@ done
 
 # Record how many records have all of their dimensions, some dimensions, no
 # dimensions. (Excluding weight.)
-n_all_dimensions=$(psql $database -t -c "$(sed -e "s/\${DIR}/${DIR}/g" ${DIR}/sql/count_all_dimensions.sql)")
-n_some_dimensions=$(psql $database -t -c "$(sed -e "s/\${DIR}/${DIR}/g" ${DIR}/sql/count_some_dimensions.sql)")
-n_no_dimensions=$(psql $database -t -c "$(sed -e "s/\${DIR}/${DIR}/g" ${DIR}/sql/count_no_dimensions.sql)")
+n_all_dimensions=$(psql $database -t -c "$(sed -e "s@\${DIR}@${DIR}@g" ${DIR}/sql/count_all_dimensions.sql)")
+n_some_dimensions=$(psql $database -t -c "$(sed -e "s@\${DIR}@${DIR}@g" ${DIR}/sql/count_some_dimensions.sql)")
+n_no_dimensions=$(psql $database -t -c "$(sed -e "s@\${DIR}@${DIR}@g" ${DIR}/sql/count_no_dimensions.sql)")
 
 # Trim whitespace.
 n_all_dimensions=${n_all_dimensions// /}
@@ -66,7 +66,7 @@ echo "${n_all_dimensions} records with height/length/thickness, ${n_some_dimensi
 echo
 
 # Record how many records have all of their dimensions as well as weight.
-n_all_dimensions_plus_weight=$(psql $database -t -c "$(sed -e "s/\${DIR}/${DIR}/g" ${DIR}/sql/count_all_dimensions_plus_weight.sql)")
+n_all_dimensions_plus_weight=$(psql $database -t -c "$(sed -e "s@\${DIR}@${DIR}@g" ${DIR}/sql/count_all_dimensions_plus_weight.sql)")
 
 # Trim whitespace.
 n_all_dimensions_plus_weight=${n_all_dimensions_plus_weight// /}
