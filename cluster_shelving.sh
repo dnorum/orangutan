@@ -43,6 +43,9 @@ echo
 # storing various files.
 source ./subscripts/setup_directories.sh
 
+# Create the various resource files needed.
+source ./subscripts/setup_resources.sh
+
 # Setup the database to use for the analysis and load in the LibraryThing data.
 source ./subscripts/setup_database.sh
 
