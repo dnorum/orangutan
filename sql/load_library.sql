@@ -1,6 +1,7 @@
 -- Load the LibraryThing TSV dump into the table created above.
-COPY library FROM '${DIR}/resources/librarything.tsv' 
-	DELIMITER E'\t'
+COPY library FROM '${DIR}/resources/librarything.csv' 
+	DELIMITER ','
 	NULL ''
 	CSV
-	HEADER;
+	HEADER
+	ENCODING 'latin1';
