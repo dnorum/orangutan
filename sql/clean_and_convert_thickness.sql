@@ -10,7 +10,7 @@ SET thickness_scrubbed =
 	CASE	WHEN	thickness ~ '^[0-9.]+ inch(es)?$'
 		THEN	substring(thickness
 			from '^([0-9.]+) inch(?:es)?$')::DOUBLE PRECISION
-		WHEN	"length" ~ '^[0-9.]+ cm$'
+		WHEN	thickness ~ '^[0-9.]+ cm$'
 		THEN	substring(thickness
 			from '^([0-9.]+) cm$')::DOUBLE PRECISION / 2.54
 		WHEN	thickness ~ '^[0-9.]+$'

@@ -11,8 +11,8 @@ database="cluster_analysis"
 # adjusted as the script is run iteratively.
 height_min=4
 height_max=12 # N/A
-length_min=3
-length_max=10 # N/A
+width_min=3
+width_max=10 # N/A
 thickness_min=0.0
 thickness_max=12 # N/A
 weight_min=0.0
