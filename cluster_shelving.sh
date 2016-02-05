@@ -40,12 +40,12 @@ source ./subscripts/flag_for_analysis.sh
 
 
 
+# If you want to NULL out-of-bounds dimensions, include this subscript.
+source ./subscripts/out_of_bounds_dimensions.sh
 
-
-
-
-
-
+# Create the flag on each record to indicate whether or not to include it in the
+# cluster analysis.
+source ./subscripts/flag_for_analysis.sh
 
 # Record the summary statistics - min, max, average, and standard deviation -
 # for each of the book dimensions. These will also be used to create histograms
