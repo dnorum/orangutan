@@ -34,7 +34,7 @@ for dimension in height width thickness
 do
 
 	# Clean up the dimension into a standard format and Imperial units.
-	psql $database -c "$(sed ${DIR}/sql/clean_and_convert_${dimension}.sql)" > /dev/null 2>&1
+	psql $database -f ${DIR}/sql/clean_and_convert_${dimension}.sql > /dev/null 2>&1
 
 	# Record the number of non-NULL values that are produced.
 	n_dimension_non_null=$(psql $database -t -c "SELECT COUNT(*) FROM library WHERE ${dimension}_scrubbed IS NOT NULL")
