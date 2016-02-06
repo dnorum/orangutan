@@ -30,7 +30,7 @@ echo "${n_records_loaded} records from LibraryThing dump file loaded into public
 echo
 
 # Clean up each dimension into a standard format and Imperial units.
-for dimension in height width thickness
+for dimension in height width thickness weight
 do
 
 	# Clean up the dimension into a standard format and Imperial units.
