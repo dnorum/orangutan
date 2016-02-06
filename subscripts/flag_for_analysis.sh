@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Run the query to flag books for inclusion in cluster analysis.
-psql $database -c "$(sed ${DIR}/sql/select_for_cluster_analysis.sql)" > /dev/null 2>&1
+psql $database -f ${DIR}/sql/select_for_cluster_analysis.sql > /dev/null 2>&1
 
 # Record the number of books selected and omitted.
 n_selected=$(psql $database -t -c "SELECT COUNT(*) FROM library WHERE include_cluster_analysis")
