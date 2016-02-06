@@ -1,6 +1,5 @@
-1) Run on laptop and fix any bugs.
-2) Run summary statistics with and without include flag. (Well, with it and disregarding it.)
-3) Output dimensions with and without include flag. ("")
-4) Plot dimensions with and without the include flag. ("")
-5) Write up use of R script for cluster analysis.
-6) PART TWO!
+1) Run summary statistics with and without include flag. (Well, with it and disregarding it.)
+2) Output dimensions with and without include flag. ("")
+3) Plot dimensions with and without the include flag. ("")
+4) Write up use of R script for cluster analysis.
+5) PART TWO!
