@@ -72,7 +72,7 @@ printf "\tAverage: ${average_thickness}\n"
 printf "\tStandard Deviation: ${stddev_thickness}\n"
 echo
 echo "Weights of Books, in Pounds:"
-printf "\tMinimum: ${min_weight}\n" # Used for \t tabs.
+printf "\tMinimum: ${min_weight}\n"
 printf "\tMaximum: ${max_weight}\n"
 printf "\tAverage: ${average_weight}\n"
 printf "\tStandard Deviation: ${stddev_weight}\n"
