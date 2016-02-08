@@ -38,15 +38,16 @@ source ./subscripts/out_of_bounds_dimensions.sh
 # cluster analysis.
 source ./subscripts/flag_for_analysis.sh
 
-
-
-
-
 # Record the summary statistics - min, max, average, and standard deviation -
 # for each of the book dimensions. These will also be used to create histograms
-# summarizing the data. (These will be run for the library overall as well as
-# those books selected for the cluster analysis.)
+# summarizing the data.
 source ./subscripts/summary_statistics.sh
+
+# Record the statistics for the books to undergo cluster analysis.
+source ./subscripts/selection_statistics.sh
+
+
+
 
 # Output the dimensions of the selected books for plotting and cluster analysis.
 source ./subscripts/output_dimensions.sh
