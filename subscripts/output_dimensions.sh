@@ -1,27 +1,23 @@
 #!/bin/bash
 
-# Clear out the working file directory if it exists.
-[ -d ${DIR}/working ] && { rm -rf ${DIR}/working; echo "Existing /working directory removed."; }
-
-# Create the /working directory.
-mkdir ${DIR}/working
-
-# Allow _all_ users write access. Note that this is not optimum, but I've not
-# taken the time to find the postgres-specific setting.
-chmod a+w ${DIR}/working
-
-# Status update.
-echo "Created /working directory."
-
-# Output raw data with book dimensions and record the number of rows imported.
-# sed is used to make the directory substitution in the SQL source file - the
-# bash regex replace is used so that the /s in the directory path don't break
-# the sed regex.
-n_records_dumped=$(psql $database -c "$(sed -e "s/\${DIR}/${DIR//\//\\\/}/g" -e "s/\${max_height}/${max_height}/g" -e "s/\${min_height}/${min_height}/g" -e "s/\${max_width}/${max_length}/g" -e "s/\${min_length}/${min_length}/g" -e "s/\${n_intervals}/${n_intervals}/g" ${DIR}/subscripts/sql/output_dimensions.sql)")
+# Output raw data with book dimensions and record the number of rows exported
+# for the cluster analysis.
+n_records_dumped=$(psql $database -c "$(sed -e "s@\${DIR}@${DIR}@g" -e "s/\${max_height}/${max_height}/g" -e "s/\${min_height}/${min_height}/g" -e "s/\${max_width}/${max_width}/g" -e "s/\${min_width}/${min_width}/g" -e "s/\${n_intervals}/${n_intervals}/g" ${DIR}/subscripts/sql/output_dimensions_for_analysis.sql)")
 
 # Scrub the output of the postgres command to just the number of rows dumped.
 n_records_dumped=${n_records_dumped//[a-zA-Z ]/}
 
 # Status update.
-echo "${n_records_dumped} records from public.library with dimensions dumped for plotting and analysis."
+echo "${n_records_dumped} records from public.library with dimensions dumped for selection plotting and analysis."
+echo
+
+# Output raw data with book dimensions and record the number of rows exported
+# for the summary plots.
+n_records_dumped_summary=$(psql $database -c "$(sed -e "s@\${DIR}@${DIR}@g" -e "s/\${max_height}/${summary_max_height}/g" -e "s/\${min_height}/${summary_min_height}/g" -e "s/\${summary_max_width}/${summary_max_width}/g" -e "s/\${min_width}/${summary_min_width}/g" -e "s/\${n_intervals}/${n_intervals}/g" ${DIR}/subscripts/sql/output_dimensions_for_analysis.sql)")
+
+# Scrub the output of the postgres command to just the number of rows dumped.
+n_records_dumped_summary=${n_records_dumped_summary//[a-zA-Z ]/}
+
+# Status update.
+echo "${n_records_dumped_summary} records from public.library with dimensions dumped for summary plotting."
 echo
