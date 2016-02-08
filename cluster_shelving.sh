@@ -46,9 +46,6 @@ source ./subscripts/summary_statistics.sh
 # Record the statistics for the books to undergo cluster analysis.
 source ./subscripts/selection_statistics.sh
 
-
-
-
 # Output the dimensions of the selected books for plotting and cluster analysis.
 source ./subscripts/output_dimensions.sh
 
