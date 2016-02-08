@@ -12,7 +12,7 @@ COPY
 		ORDER BY
 			1 ASC, 2 ASC)
 TO
-	'${DIR}/working/book_heights_widths_analysis.csv'
+	'${DIR}/working/book_heights_widths_selection.csv'
 (	FORMAT csv
 ,	DELIMITER ','
 ,	HEADER
@@ -46,7 +46,7 @@ COPY
 		WHERE
 			include_cluster_analysis	)
 TO
-	'${DIR}/working/book_dimensions_analysis.csv'
+	'${DIR}/working/book_dimensions_selection.csv'
 (	FORMAT csv
 ,	DELIMITER ','
 ,	HEADER
