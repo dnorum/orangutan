@@ -5,33 +5,12 @@ COPY
 		,	COUNT(*) AS "Number of Books"
 		FROM
 			library
-		WHERE
-			height_scrubbed IS NOT NULL
-		AND	width_scrubbed IS NOT NULL
-		AND	thickness_scrubbed IS NOT NULL
 		GROUP BY
 			1, 2
 		ORDER BY
-			1 ASC, 2 ASC)
+			1 ASC, 2 ASC	)
 TO
-	'${DIR}/working/book_heights_widths.csv'
-(	FORMAT csv
-,	DELIMITER ','
-,	HEADER
-,	NULL ''	);
-
-COPY
-	(	SELECT
-			book_id AS "Book ID"
-		,	height_scrubbed AS "Height (in)"
-		,	width_scrubbed AS "Width (in)"
-		FROM
-			library
-		WHERE
-			height_scrubbed IS NOT NULL
-		AND	width_scrubbed IS NOT NULL	)
-TO
-	'${DIR}/r/kmeans_data.csv'
+	'${DIR}/working/book_heights_widths_summary.csv'
 (	FORMAT csv
 ,	DELIMITER ','
 ,	HEADER
@@ -45,13 +24,9 @@ COPY
 		,	thickness_scrubbed AS "Thickness (in)"
 		,	weight_scrubbed AS "Weight (lb)"
 		FROM
-			library
-		WHERE
-			height_scrubbed IS NOT NULL
-		AND	width_scrubbed IS NOT NULL
-		AND	thickness_scrubbed IS NOT NULL	)
+			library	)
 TO
-	'${DIR}/working/book_dimensions.csv'
+	'${DIR}/working/book_dimensions_summary.csv'
 (	FORMAT csv
 ,	DELIMITER ','
 ,	HEADER
