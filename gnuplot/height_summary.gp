@@ -1,15 +1,15 @@
 # n = Number of intervals
-# max = Maximum weight
-# min = Minimum weight
+# max = Maximum height
+# min = Minimum height
 
 reset
-set title 'Distribution of Book Weights'
-set xlabel 'Weight [lb]'
+set title 'Distribution of Overall Book Heights'
+set xlabel 'Height [in]'
 set ylabel 'Number of Books'
 set timestamp # turn on a date/time indicator
 set datafile separator ","
 set term postscript
-set output DIR."/plots/book_weights.ps"
+set output DIR."/plots/book_heights_summary.ps"
 width=(max-min)/n # Interval width
 # Define the function used to map a value to an interval
 hist(x,width)=width*floor(x/width)+width/2.0
@@ -21,4 +21,4 @@ set xtics min,(max-min)/5,max
 set boxwidth width*0.9
 set style fill solid 0.5 # Fillstyle
 set tics out nomirror
-plot DIR."/working/book_dimensions.csv" every ::1 using (hist($5,width)):(1.0) smooth freq w boxes lc rgb"green" notitle
+plot DIR."/working/book_dimensions_summary.csv" every ::1 using (hist($2,width)):(1.0) smooth freq w boxes lc rgb"green" notitle
