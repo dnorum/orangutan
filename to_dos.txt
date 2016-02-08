@@ -1,3 +1,4 @@
+0) Check running on laptop.
 1) Write up use of R script for cluster analysis.
 2) PART TWO!
 3) Refactor part one to not be so clunky and copypasta.
