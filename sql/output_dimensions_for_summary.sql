@@ -5,6 +5,9 @@ COPY
 		,	COUNT(*) AS "Number of Books"
 		FROM
 			library
+		WHERE
+			height_scrubbed IS NOT NULL
+		AND	width_scrubbed IS NOT NULL
 		GROUP BY
 			1, 2
 		ORDER BY
