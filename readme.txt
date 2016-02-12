@@ -26,7 +26,12 @@ further analysis.
 	> source('kmeans.R')
 and follow the instructions from the script's source at
 http://www.mattpeeples.net/kmeans.html.
-Note that depending on the number of 
+	Note that depending on the number of books you have in your library (and if
+you're using this then that number has probably winked coquettishly at five
+digits) and the speed of your computer the R script may take... some time to
+run, especially if the sizes of books in your library vary widely.
+	The summary histograms can help with selecting a reasonable number of
+clustering solutions to attempt.
 4) Run ./cluster_shelving2.sh. It will load the clusters into the database and
 add them back to the original records loaded from LibraryThing, then output a
 set of by-cluster summaries and plots.
