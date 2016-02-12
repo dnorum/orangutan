@@ -1,67 +1,64 @@
 #!/bin/bash
 
-# Set the cluster psql variable.
-psql $database -t -c "\set cluster '${cluster}'" > /dev/null 2>&1
-
-n_books=$(psql $database -t -c 'SELECT COUNT(1) FROM library WHERE "cluster" = :cluster')
+n_books=$(echo 'SELECT COUNT(1) FROM library WHERE "cluster" = ' $cluster '::TEXT' | psql $database -t)
 n_books=${n_books// /}
 
 # Record the statistics for the height (trimming whitespace).
-min_height=$(psql $database -t -c 'SELECT min(height_scrubbed) FROM library WHERE height_scrubbed IS NOT NULL AND "cluster" = :cluster')
+min_height=$(echo 'SELECT min(height_scrubbed) FROM library WHERE height_scrubbed IS NOT NULL AND "cluster" = ' $cluster '::TEXT' | psql $database -t)
 min_height=${min_height// /}
 
-max_height=$(psql $database -t -c 'SELECT max(height_scrubbed) FROM library WHERE height_scrubbed IS NOT NULL AND "cluster" = :cluster')
+max_height=$(echo 'SELECT max(height_scrubbed) FROM library WHERE height_scrubbed IS NOT NULL AND "cluster" = ' $cluster '::TEXT' | psql $database -t)
 max_height=${max_height// /}
 
-average_height=$(psql $database -t -c 'SELECT avg(height_scrubbed) FROM library WHERE height_scrubbed IS NOT NULL AND "cluster" = :cluster')
+average_height=$(echo 'SELECT avg(height_scrubbed) FROM library WHERE height_scrubbed IS NOT NULL AND "cluster" = ' $cluster '::TEXT' | psql $database -t)
 average_height=${average_height// /}
 
-stddev_height=$(psql $database -t -c 'SELECT stddev_samp(height_scrubbed) FROM library WHERE height_scrubbed IS NOT NULL AND "cluster" = :cluster')
+stddev_height=$(echo 'SELECT stddev_samp(height_scrubbed) FROM library WHERE height_scrubbed IS NOT NULL AND "cluster" = ' $cluster '::TEXT' | psql $database -t)
 stddev_height=${stddev_height// /}
 
 # Record the statistics for the width (trimming whitespace).
-min_width=$(psql $database -t -c 'SELECT min(width_scrubbed) FROM library WHERE width_scrubbed IS NOT NULL AND "cluster" = :cluster')
+min_width=$(echo 'SELECT min(width_scrubbed) FROM library WHERE width_scrubbed IS NOT NULL AND "cluster" = ' $cluster '::TEXT' | psql $database -t)
 min_width=${min_width// /}
 
-max_width=$(psql $database -t -c 'SELECT max(width_scrubbed) FROM library WHERE width_scrubbed IS NOT NULL AND "cluster" = :cluster')
+max_width=$(echo 'SELECT max(width_scrubbed) FROM library WHERE width_scrubbed IS NOT NULL AND "cluster" = ' $cluster '::TEXT' | psql $database -t)
 max_width=${max_width// /}
 
-average_width=$(psql $database -t -c 'SELECT avg(width_scrubbed) FROM library WHERE width_scrubbed IS NOT NULL AND "cluster" = :cluster')
+average_width=$(echo 'SELECT avg(width_scrubbed) FROM library WHERE width_scrubbed IS NOT NULL AND "cluster" = ' $cluster '::TEXT' | psql $database -t)
 average_width=${average_width// /}
 
-stddev_width=$(psql $database -t -c 'SELECT stddev_samp(width_scrubbed) FROM library WHERE width_scrubbed IS NOT NULL AND "cluster" = :cluster')
+stddev_width=$(echo 'SELECT stddev_samp(width_scrubbed) FROM library WHERE width_scrubbed IS NOT NULL AND "cluster" = ' $cluster '::TEXT' | psql $database -t)
 stddev_width=${stddev_width// /}
 
 # Record the statistics for the thickness (trimming whitespace).
-min_thickness=$(psql $database -t -c 'SELECT min(thickness_scrubbed) FROM library WHERE thickness_scrubbed IS NOT NULL AND "cluster" = :cluster')
+min_thickness=$(echo 'SELECT min(thickness_scrubbed) FROM library WHERE thickness_scrubbed IS NOT NULL AND "cluster" = ' $cluster '::TEXT' | psql $database -t)
 min_thickness=${min_thickness// /}
 
-max_thickness=$(psql $database -t -c 'SELECT max(thickness_scrubbed) FROM library WHERE thickness_scrubbed IS NOT NULL AND "cluster" = :cluster')
+max_thickness=$(echo 'SELECT max(thickness_scrubbed) FROM library WHERE thickness_scrubbed IS NOT NULL AND "cluster" = ' $cluster '::TEXT' | psql $database -t)
 max_thickness=${max_thickness// /}
 
-average_thickness=$(psql $database -t -c 'SELECT avg(thickness_scrubbed) FROM library WHERE thickness_scrubbed IS NOT NULL AND "cluster" = :cluster')
+average_thickness=$(echo 'SELECT avg(thickness_scrubbed) FROM library WHERE thickness_scrubbed IS NOT NULL AND "cluster" = ' $cluster '::TEXT' | psql $database -t)
 average_thickness=${average_thickness// /}
 
-total_thickness=$(psql $database -t -c 'SELECT sum(thickness_scrubbed) FROM library WHERE thickness_scrubbed IS NOT NULL AND "cluster" = :cluster')
+total_thickness=$(echo 'SELECT sum(thickness_scrubbed) FROM library WHERE thickness_scrubbed IS NOT NULL AND "cluster" = ' $cluster '::TEXT' | psql $database -t)
 total_thickness=${total_thickness// /}
 
-stddev_thickness=$(psql $database -t -c 'SELECT stddev_samp(thickness_scrubbed) FROM library WHERE thickness_scrubbed IS NOT NULL AND "cluster" = :cluster')
+stddev_thickness=$(echo 'SELECT stddev_samp(thickness_scrubbed) FROM library WHERE thickness_scrubbed IS NOT NULL AND "cluster" = ' $cluster '::TEXT' | psql $database -t)
 stddev_thickness=${stddev_thickness// /}
 
 # Record the statistics for the weight (trimming whitespace).
-min_weight=$(psql $database -t -c 'SELECT min(weight_scrubbed) FROM library WHERE weight_scrubbed IS NOT NULL AND "cluster" = :cluster')
+min_weight=$(echo 'SELECT min(weight_scrubbed) FROM library WHERE weight_scrubbed IS NOT NULL AND "cluster" = ' $cluster '::TEXT' | psql $database -t)
 min_weight=${min_weight// /}
 
-max_weight=$(psql $database -t -c 'SELECT max(weight_scrubbed) FROM library WHERE weight_scrubbed IS NOT NULL AND "cluster" = :cluster')
+max_weight=$(echo 'SELECT max(weight_scrubbed) FROM library WHERE weight_scrubbed IS NOT NULL AND "cluster" = ' $cluster '::TEXT' | psql $database -t)
 max_weight=${max_weight// /}
 
-average_weight=$(psql $database -t -c 'SELECT avg(weight_scrubbed) FROM library WHERE weight_scrubbed IS NOT NULL AND "cluster" = :cluster')
+average_weight=$(echo 'SELECT avg(weight_scrubbed) FROM library WHERE weight_scrubbed IS NOT NULL AND "cluster" = ' $cluster '::TEXT' | psql $database -t)
 average_weight=${average_weight// /}
 
-total_weight=$(psql $database -t -c 'SELECT sum(weight_scrubbed) FROM library WHERE weight_scrubbed IS NOT NULL AND "cluster" = :cluster')
+total_weight=$(echo 'SELECT sum(weight_scrubbed) FROM library WHERE weight_scrubbed IS NOT NULL AND "cluster" = ' $cluster '::TEXT' | psql $database -t)
 total_weight=${total_weight// /}
 
-stddev_weight=$(psql $database -t -c 'SELECT stddev_samp(weight_scrubbed) FROM library WHERE weight_scrubbed IS NOT NULL AND "cluster" = :cluster')
+stddev_weight=$(echo 'SELECT stddev_samp(weight_scrubbed) FROM library WHERE weight_scrubbed IS NOT NULL AND "cluster" = ' $cluster '::TEXT' | psql $database -t)
 stddev_weight=${stddev_weight// /}
 
 # Summary output.
