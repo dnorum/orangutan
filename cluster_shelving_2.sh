@@ -51,10 +51,14 @@ while ((cluster<=max_cluster)); do
 	chmod a+w ${DIR}/working/cluster_${cluster}/plots
 
 	# Output the dimensional data for each cluster.
-psql $database -c "$(sed -e "s@\${DIR}@${DIR}@g" -e "s/\${cluster}/${cluster}/g" -e "s/\${max_height}/${max_height}/g" -e "s/\${min_height}/${min_height}/g" -e "s/\${max_width}/${max_width}/g" -e "s/\${min_width}/${min_width}/g" -e "s/\${n_intervals}/${n_intervals}/g" ${DIR}/sql/output_dimensions_for_cluster_summary.sql)"
+	psql $database -c "$(sed -e "s@\${DIR}@${DIR}@g" -e "s/\${cluster}/${cluster}/g" -e "s/\${max_height}/${max_height}/g" -e "s/\${min_height}/${min_height}/g" -e "s/\${max_width}/${max_width}/g" -e "s/\${min_width}/${min_width}/g" -e "s/\${n_intervals}/${n_intervals}/g" ${DIR}/sql/output_dimensions_for_cluster_summary.sql)"
 
 	# Plot the histograms and heat maps for each cluster.
 	source ./subscripts/cluster_summary_plots.sh
+
+	# Set off the next output chunk.
+	echo
+	echo
 
 	let cluster++
 done
