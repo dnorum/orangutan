@@ -24,8 +24,16 @@ echo "Clusters added to the main library table."
 max_cluster=$(psql $database -t -c "SELECT max("cluster"::INT) FROM library")
 max_cluster=${max_cluster//[a-zA-Z ]/}
 echo "Looping over clusters 1 to ${max_cluster}."
+echo
 
+# Now, loop over the clusters.
+typeset -i cluster max_cluster
+let cluster=1
+while ((cluster<=max_cluster)); do
 
+	echo "Summary statistics for cluster ${cluster}:"
+
+done
 
 # Summarize each cluster - the same statistics as before, but including the
 # total thickness (shelf-length) of the cluster.
