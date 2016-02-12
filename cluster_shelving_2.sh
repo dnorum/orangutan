@@ -16,7 +16,7 @@ echo
 source ./subscripts/load_clusters.sh
 
 # Add the clusters to the main library table.
-psql $database -f ${DIR}/subscripts/sql/add_clusters.sql > /dev/null 2>&1
+psql $database -f ${DIR}/sql/add_clusters.sql > /dev/null 2>&1
 
 
 
