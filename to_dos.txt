@@ -1,3 +1,4 @@
+0) Copy everything to a text file as well.
 1) Load cluster table back in
 2) Add cluster IDs to main library table
 3) Output by-cluster dimensions
