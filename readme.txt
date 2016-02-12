@@ -15,6 +15,9 @@ be included a book must have a valid height and width; thickness is optional but
 useful for shelf-length planning.)
 	The books that meet these criteria are then dumped out into a CSV file ready
 to be run through the R cluster-analysis script.
+	Note that if you want to store the output as a text file, the tee command
+can be used:
+	$ ./cluster_shelving(_2)? | tee output.txt
 
 1) Export your LibraryThing database as a tab-separated file vie
 www.librarything.com/export.php?export_type=tsv. Save it in the ./resources
