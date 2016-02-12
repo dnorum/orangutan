@@ -1,9 +1,2 @@
-0) Copy everything to a text file as well.
-1) Load cluster table back in
-2) Add cluster IDs to main library table
-3) Output by-cluster dimensions
-4) By-cluster summaries
-5) By-cluster plots
-6) Check w/ cluster analysis source about questions in script (> vs. <; headers)
-7) FULL TEST RUN!
-8) Refactor part one to not be so clunky and copypasta.
+1) Check w/ cluster analysis source about questions in script (> vs. <; headers)
+2) Refactor to make things cleaner and more intelligible.
