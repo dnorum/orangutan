@@ -15,11 +15,14 @@ echo
 # Create the table public.library_clusters and load in the R cluster file.
 source ./subscripts/load_clusters.sh
 
-
-
-
-
 # Add the clusters to the main library table.
+psql $database -f ${DIR}/subscripts/sql/add_clusters.sql > /dev/null 2>&1
+
+
+
+
+
+
 
 # Summarize each cluster - the same statistics as before, but including the
 # total thickness (shelf-length) of the cluster.
