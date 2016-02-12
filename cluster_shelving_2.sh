@@ -19,8 +19,10 @@ source ./subscripts/load_clusters.sh
 psql $database -f ${DIR}/sql/add_clusters.sql > /dev/null 2>&1
 echo "Clusters added to the main library table."
 
-# Get the number of clusters over which to loop.
+# Get the number of clusters over which to loop. (Scrub the Postgres output
+# before printing it out.
 max_cluster=$(psql $database -t -c "SELECT max("cluster"::INT) FROM library")
+max_cluster=${max_cluster//[a-zA-Z ]/}
 echo "Looping over clusters 1 to ${max_cluster}."
 
 
