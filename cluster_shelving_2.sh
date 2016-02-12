@@ -31,13 +31,13 @@ typeset -i cluster max_cluster
 let cluster=1
 while ((cluster<=max_cluster)); do
 
+	# Summarize each cluster - the same statistics as before.
 	echo "Summary statistics for cluster ${cluster}:"
+	source ./subscripts/summary_cluster_statistics.sh
 
 	let cluster++
 done
 
-# Summarize each cluster - the same statistics as before, but including the
-# total thickness (shelf-length) of the cluster.
 
 # Output the dimensional data for each cluster.
 
