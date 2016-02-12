@@ -16,7 +16,8 @@ do
 	echo "Created /$subdir subdirectory."
 done
 
-# Allow _all_ users write access for the working directory. Note that this is
-# not optimal, but I've not taken the time to find the postgres-specific
+# Allow _all_ users write access for the working and r directories. Note that
+# this is not optimal, but I've not taken the time to find the postgres-specific
 # setting.
+chmod a+w ${DIR}/r
 chmod a+w ${DIR}/working
