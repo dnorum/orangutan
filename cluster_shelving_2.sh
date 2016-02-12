@@ -44,6 +44,12 @@ while ((cluster<=max_cluster)); do
 	mkdir ${DIR}/working/cluster_${cluster}/plots
 	echo "Created /working/cluster_${cluster}/plots subdirectory."
 
+	# Allow _all_ users write access for these directories. Note that this
+	# is not optimal, but I've not taken the time to find the
+	# postgres-specific setting.
+	chmod a+w ${DIR}/working/cluster_${cluster}
+	chmod a+w ${DIR}/working/cluster_${cluster}/plots
+
 	# Output the dimensional data for each cluster.
 psql $database -c "$(sed -e "s@\${DIR}@${DIR}@g" -e "s/\${cluster}/${cluster}/g" -e "s/\${max_height}/${max_height}/g" -e "s/\${min_height}/${min_height}/g" -e "s/\${max_width}/${max_width}/g" -e "s/\${min_width}/${min_width}/g" -e "s/\${n_intervals}/${n_intervals}/g" ${DIR}/sql/output_dimensions_for_cluster_summary.sql)"
 
