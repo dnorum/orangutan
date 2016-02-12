@@ -20,7 +20,7 @@ AND	width_scrubbed IS NOT NULL
 AND	thickness_scrubbed IS NOT NULL
 
 	-- Only consider books in the desired collection; here, a new house.
-AND	collections ~ 'New House';
+--AND	collections ~ 'New House';
 
 	-- Other conditions could also be included, such as tags, rating, date
 	-- acquired, etc.
