@@ -36,6 +36,9 @@ max_thickness=${max_thickness// /}
 average_thickness=$(psql $database -t -c "SELECT avg(thickness_scrubbed) FROM library WHERE thickness_scrubbed IS NOT NULL")
 average_thickness=${average_thickness// /}
 
+total_thickness=$(psql $database -t -c "SELECT sum(thickness_scrubbed) FROM library WHERE thickness_scrubbed IS NOT NULL")
+total_thickness=${total_thickness// /}
+
 stddev_thickness=$(psql $database -t -c "SELECT stddev_samp(thickness_scrubbed) FROM library WHERE thickness_scrubbed IS NOT NULL")
 stddev_thickness=${stddev_thickness// /}
 
@@ -48,6 +51,9 @@ max_weight=${max_weight// /}
 
 average_weight=$(psql $database -t -c "SELECT avg(weight_scrubbed) FROM library WHERE weight_scrubbed IS NOT NULL")
 average_weight=${average_weight// /}
+
+total_weight=$(psql $database -t -c "SELECT sum(weight_scrubbed) FROM library WHERE weight_scrubbed IS NOT NULL")
+total_weight=${total_weight// /}
 
 stddev_weight=$(psql $database -t -c "SELECT stddev_samp(weight_scrubbed) FROM library WHERE weight_scrubbed IS NOT NULL")
 stddev_weight=${stddev_weight// /}
@@ -69,11 +75,13 @@ echo "Thicknesses of Books, in Inches:"
 printf "\tMinimum: ${min_thickness}\n"
 printf "\tMaximum: ${max_thickness}\n"
 printf "\tAverage: ${average_thickness}\n"
+printf "\tTotal: ${total_thickness}\n"
 printf "\tStandard Deviation: ${stddev_thickness}\n"
 echo
 echo "Weights of Books, in Pounds:"
 printf "\tMinimum: ${min_weight}\n"
 printf "\tMaximum: ${max_weight}\n"
 printf "\tAverage: ${average_weight}\n"
+printf "\tTotal: ${total_weight}\n"
 printf "\tStandard Deviation: ${stddev_weight}\n"
 echo
