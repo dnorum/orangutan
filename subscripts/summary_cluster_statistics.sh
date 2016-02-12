@@ -1,5 +1,8 @@
 #!/bin/bash
 
+n_books=$(psql $database -t -c 'SELECT COUNT(1) FROM library WHERE "cluster" = ${cluster}')
+n_books=${n_books// /}
+
 # Record the statistics for the height (trimming whitespace).
 min_height=$(psql $database -t -c 'SELECT min(height_scrubbed) FROM library WHERE height_scrubbed IS NOT NULL AND "cluster" = ${cluster}')
 min_height=${min_height// /}
@@ -59,6 +62,7 @@ stddev_weight=$(psql $database -t -c 'SELECT stddev_samp(weight_scrubbed) FROM l
 stddev_weight=${stddev_weight// /}
 
 # Summary output.
+echo "${n_books} in cluster ${cluster}."
 echo "Heights of Books, in Inches:"
 printf "\tMinimum: ${min_height}\n" # Used for \t tabs.
 printf "\tMaximum: ${max_height}\n"
