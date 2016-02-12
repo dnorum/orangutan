@@ -12,7 +12,7 @@ COPY
 		ORDER BY
 			1 ASC, 2 ASC)
 TO
-	'${DIR}/working/cluster_${cluster}/book_heights_widths_selection.csv'
+	'${DIR}/working/cluster_${cluster}/book_heights_widths_summary.csv'
 (	FORMAT csv
 ,	DELIMITER ','
 ,	HEADER
@@ -30,7 +30,7 @@ COPY
 		WHERE
 			"cluster" = ${cluster}::TEXT	)
 TO
-	'${DIR}/working/cluster_${cluster}/book_dimensions_selection.csv'
+	'${DIR}/working/cluster_${cluster}/book_dimensions_summary.csv'
 (	FORMAT csv
 ,	DELIMITER ','
 ,	HEADER
