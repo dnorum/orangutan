@@ -33,6 +33,7 @@ while ((cluster<=max_cluster)); do
 
 	echo "Summary statistics for cluster ${cluster}:"
 
+	let cluster++
 done
 
 # Summarize each cluster - the same statistics as before, but including the
