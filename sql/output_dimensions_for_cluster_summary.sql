@@ -6,7 +6,7 @@ COPY
 		FROM
 			library
 		WHERE
-			include_cluster_analysis
+			"cluster" = ${cluster}::TEXT
 		GROUP BY
 			1, 2
 		ORDER BY
@@ -28,7 +28,7 @@ COPY
 		FROM
 			library
 		WHERE
-			include_cluster_analysis	)
+			"cluster" = ${cluster}::TEXT	)
 TO
 	'${DIR}/working/cluster_${cluster}/book_dimensions_selection.csv'
 (	FORMAT csv
