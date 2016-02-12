@@ -16,10 +16,24 @@ useful for shelf-length planning.)
 	The books that meet these criteria are then dumped out into a CSV file ready
 to be run through the R cluster-analysis script.
 
-QQQ MORE STUFF GOES HERE QQQ
+1) Export your LibraryThing database as a tab-separated file vie
+www.librarything.com/export.php?export_type=tsv. Save it in the ./resources
+directory of the repository.
+2) Run ./cluster_shelving.sh. It will load, scrub, normalize, flag, export,
+summarize, and plot both the library as a whole and the books selected for
+further analysis.
+3) In RStudio, run the cluster analysis script via 
+	> source('kmeans.R')
+and follow the instructions from the script's source at
+http://www.mattpeeples.net/kmeans.html.
+Note that depending on the number of 
+4) Run ./cluster_shelving2.sh. It will load the clusters into the database and
+add them back to the original records loaded from LibraryThing, then output a
+set of by-cluster summaries and plots.
 
+Links:
 Git - https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
 PostgreSQL - https://help.ubuntu.com/community/PostgreSQL
 R - www.r-bloggers.com/download-and-install-r-in-ubuntu
 Cluster Analysis in R - http://www.mattpeeples.net/kmeans.html
-LibraryThing export - www.librarything.com/export.php?export_type=tsv
+LibraryThing Export - www.librarything.com/export.php?export_type=tsv
