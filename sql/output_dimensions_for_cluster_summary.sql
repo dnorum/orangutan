@@ -1,7 +1,7 @@
 COPY
 	(	SELECT
-			((${max_height}-${min_height})/${n_intervals}) * floor(height_scrubbed/((${max_height}-${min_height})/${n_intervals})) + ((${max_height}-${min_height})/${n_intervals})/2.0  AS "Height Bin"
-		,	((${max_width}-${min_width})/${n_intervals}) * floor(width_scrubbed/((${max_width}-${min_width})/${n_intervals})) + ((${max_width}-${min_width})/${n_intervals})/2.0  AS "width (Width) Bin"
+			((${max_height}-${min_height})::DOUBLE PRECISION/${n_intervals}::DOUBLE PRECISION) * floor(height_scrubbed::DOUBLE PRECISION/((${max_height}-${min_height})::DOUBLE PRECISION/${n_intervals}::DOUBLE PRECISION)) + ((${max_height}-${min_height})::DOUBLE PRECISION/${n_intervals}::DOUBLE PRECISION)/2.0  AS "Height Bin"
+		,	((${max_width}-${min_width})::DOUBLE PRECISION/${n_intervals}::DOUBLE PRECISION) * floor(width_scrubbed::DOUBLE PRECISION/((${max_width}-${min_width})::DOUBLE PRECISION/${n_intervals}::DOUBLE PRECISION)) + ((${max_width}-${min_width})::DOUBLE PRECISION/${n_intervals}::DOUBLE PRECISION)/2.0  AS "width (Width) Bin"
 		,	COUNT(*) AS "Number of Books"
 		FROM
 			library
