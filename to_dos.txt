@@ -1,2 +1,4 @@
-1) Check w/ cluster analysis source about questions in script (> vs. <; headers)
-2) Refactor to make things cleaner and more intelligible.
+1) Convert inches in total thickness to feet + inches.
+2) Include histograms with thickness weighting for height-width summaries.
+3) Check w/ cluster analysis source about questions in script (> vs. <; headers).
+4) Refactor to make things cleaner and more intelligible.
