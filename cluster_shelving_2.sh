@@ -37,24 +37,25 @@ while ((cluster<=max_cluster)); do
 
 	# Clear out DIR/subdir (if it exists) for each cluster's data and plots.
 	[ -d ${DIR}/working/cluster_${cluster} ] && { rm -rf ${DIR}/working/cluster_${cluster}; echo "Existing /working/cluster_${cluster} directory removed."; }
+	[ -d ${DIR}/plots/cluster_${cluster} ] && { rm -rf ${DIR}/plots/cluster_${cluster}; echo "Existing /plots/cluster_${cluster} directory removed."; }
 
 	# Create DIR/subdirs
 	mkdir ${DIR}/working/cluster_${cluster}
 	echo "Created /working/cluster_${cluster} subdirectory."
-	mkdir ${DIR}/working/cluster_${cluster}/plots
-	echo "Created /working/cluster_${cluster}/plots subdirectory."
+	mkdir ${DIR}/plots/cluster_${cluster}
+	echo "Created /plots/cluster_${cluster} subdirectory."
 
 	# Allow _all_ users write access for these directories. Note that this
 	# is not optimal, but I've not taken the time to find the
 	# postgres-specific setting.
 	chmod a+w ${DIR}/working/cluster_${cluster}
-	chmod a+w ${DIR}/working/cluster_${cluster}/plots
+	chmod a+w ${DIR}/plots/cluster_${cluster}
 
 	# Output the dimensional data for each cluster.
 	psql $database -c "$(sed -e "s@\${DIR}@${DIR}@g" -e "s/\${cluster}/${cluster}/g" -e "s/\${max_height}/${max_height}/g" -e "s/\${min_height}/${min_height}/g" -e "s/\${max_width}/${max_width}/g" -e "s/\${min_width}/${min_width}/g" -e "s/\${n_intervals}/${n_intervals}/g" ${DIR}/sql/output_dimensions_for_cluster_summary.sql)"
 
 	# Plot the histograms and heat maps for each cluster.
-	source ./subscripts/cluster_summary_plots.sh
+	source ./subscripts/summary_cluster_plots.sh
 
 	# Set off the next output chunk.
 	echo
@@ -62,5 +63,3 @@ while ((cluster<=max_cluster)); do
 
 	let cluster++
 done
-
-# Clean things up and zip output folders for convenience.
