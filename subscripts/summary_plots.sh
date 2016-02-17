@@ -17,6 +17,9 @@ echo "Book weights plotted to $DIR/plots/book_weights_selection.ps"
 gnuplot -e "DIR='${DIR}'" -e "n=${n_intervals}" -e "maxh=${max_height}" -e "minh=${min_height}" -e "maxl=${max_width}" -e "minl=${min_width}" ${DIR}/gnuplot/height_width_selection.gp
 echo "Book heights and widths plotted to $DIR/plots/book_heights_widths_selection.ps"
 
+gnuplot -e "DIR='${DIR}'" -e "n=${n_intervals}" -e "maxh=${max_height}" -e "minh=${min_height}" -e "maxl=${max_width}" -e "minl=${min_width}" ${DIR}/gnuplot/height_width_weighted_selection.gp
+echo "Book heights and widths, weighted by thickness, plotted to $DIR/plots/book_heights_widths_weighted_selection.ps"
+
 gnuplot -e "DIR='${DIR}'" -e "n=${n_intervals}" -e "max=${summary_max_height}" -e "min=${summary_min_height}" ${DIR}/gnuplot/height_summary.gp
 echo "Book heights plotted to $DIR/plots/book_heights_summary.ps"
 
@@ -31,3 +34,6 @@ echo "Book weights plotted to $DIR/plots/book_weights_summary.ps"
 
 gnuplot -e "DIR='${DIR}'" -e "n=${n_intervals}" -e "maxh=${summary_max_height}" -e "minh=${summary_min_height}" -e "maxl=${summary_max_width}" -e "minl=${summary_min_width}" ${DIR}/gnuplot/height_width_summary.gp
 echo "Book heights and widths plotted to $DIR/plots/book_heights_widths_summary.ps"
+
+gnuplot -e "DIR='${DIR}'" -e "n=${n_intervals}" -e "maxh=${summary_max_height}" -e "minh=${summary_min_height}" -e "maxl=${summary_max_width}" -e "minl=${summary_min_width}" ${DIR}/gnuplot/height_width_weighted_summary.gp
+echo "Book heights and widths, weighted by thickness, plotted to $DIR/plots/book_heights_widths_weighted_summary.ps"
