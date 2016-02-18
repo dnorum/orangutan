@@ -1,3 +1,5 @@
 1) Test on laptop.
-2) Add test for height > length > thickness to deal w/ mismatched LT dimensions in personal export.
-3) Check w/ cluster analysis source about questions in script (> vs. <; headers).
+2) Add automatic append via tee to main scripts.
+3) Check and update formatting of output for readability.
+4) Add test for height > length > thickness to deal w/ mismatched LT dimensions in personal export.
+5) Check w/ cluster analysis source about questions in script (> vs. <; headers).
