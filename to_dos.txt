@@ -1,2 +1,3 @@
 1) Test on laptop.
-2) Check w/ cluster analysis source about questions in script (> vs. <; headers).
+2) Add test for height > length > thickness to deal w/ mismatched LT dimensions in personal export.
+3) Check w/ cluster analysis source about questions in script (> vs. <; headers).
