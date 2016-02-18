@@ -1,5 +1,4 @@
 1) Add # books to legend on plots
 2) Test on laptop.
 3) Check and update formatting of output for readability.
-4) Add test for height > length > thickness to deal w/ mismatched LT dimensions in personal export.
-5) Check w/ cluster analysis source about questions in script (> vs. <; headers).
+4) Check w/ cluster analysis source about questions in script (> vs. <; headers).

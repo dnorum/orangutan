@@ -22,5 +22,12 @@ AND	thickness_scrubbed IS NOT NULL
 	-- Only consider books in the desired collection; here, a new house.
 --AND	collections ~ 'New House';
 
+	-- LibraryThing's auto-generated dimensions sometimes switch around the
+	-- ordering. Until I've updated all of my records manually, this will
+	-- take care of most of them. Do lose out on long-format comic
+	-- collections, unfortunately. (For the moment, with this kludge.)
+AND	height_scrubbed >= width_scrubbed
+AND	width_scrubbed > thickness_scrubbed
+
 	-- Other conditions could also be included, such as tags, rating, date
 	-- acquired, etc.
