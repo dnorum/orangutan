@@ -39,9 +39,17 @@ clustering solutions to attempt.
 add them back to the original records loaded from LibraryThing, then output a
 set of by-cluster summaries and plots.
 
-Links:
+Portions of this repository are drawn from the following work(s):
+
+kmeans.R
+Peeples, Matthew A.
+2011 R Script for K-Means Cluster Analysis. Electronic document, http://www.mattpeeples.net/kmeans.html, accessed January 29, 2016.
+
+tsv2csv.py
+https://gist.github.com/nsonnad/7598574
+
+Miscellaneous Links:
 Git - https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
 PostgreSQL - https://help.ubuntu.com/community/PostgreSQL
 R - www.r-bloggers.com/download-and-install-r-in-ubuntu
-Cluster Analysis in R - http://www.mattpeeples.net/kmeans.html
 LibraryThing Export - www.librarything.com/export.php?export_type=tsv
