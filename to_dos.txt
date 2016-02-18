@@ -1,3 +1,2 @@
 1) Test on laptop.
 2) Check and update formatting of output for readability.
-3) Check w/ cluster analysis source about questions in script (> vs. <; headers).
