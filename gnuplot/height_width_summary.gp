@@ -1,5 +1,6 @@
 reset
 set title 'Distribution of Overall Book Heights & Widths'
+set label "(".n_books.") Books" at screen 0.5, 0.9 font ",10"
 set xlabel 'Height [in]'
 set ylabel 'Width [in]'
 set timestamp # turn on a date/time indicator

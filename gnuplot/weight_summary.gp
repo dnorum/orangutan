@@ -4,6 +4,7 @@
 
 reset
 set title 'Distribution of Overall Book Weights'
+set label "(".n_books.") Books" at screen 0.5, 0.9 font ",10"
 set xlabel 'Weight [lb]'
 set ylabel 'Number of Books'
 set timestamp # turn on a date/time indicator
