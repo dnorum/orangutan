@@ -3,8 +3,7 @@
 # min = Minimum height
 
 reset
-set title 'Distribution of Overall Book Thicknesses'
-set label "(".n_books.") Books" at screen 0.5, 0.9 font ",10"
+set title "Distribution of ".n_books." Book Thicknesses"
 set xlabel 'Thickness [in]'
 set ylabel 'Number of Books'
 set timestamp # turn on a date/time indicator

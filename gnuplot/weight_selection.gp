@@ -3,8 +3,7 @@
 # min = Minimum weight
 
 reset
-set title 'Distribution of Book Weights Selected for Analysis'
-set label "(".n_books.") Books" at screen 0.5, 0.9 font ",10"
+set title "Distribution of ".n_books." Book Weights Selected for Analysis"
 set xlabel 'Weight [lb]'
 set ylabel 'Number of Books'
 set timestamp # turn on a date/time indicator
