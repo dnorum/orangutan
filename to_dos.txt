@@ -1,2 +1,2 @@
-1) Test on laptop.
-2) Check and update formatting of output for readability.
+1) Check and update formatting of output for readability.
+2) Check for update to kmeans.R.
