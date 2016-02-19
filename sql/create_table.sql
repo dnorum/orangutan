@@ -47,6 +47,7 @@ CREATE TABLE library (
 ,	copies TEXT
 ,	source TEXT
 ,	entry_date TEXT
+,	from_where TEXT
 ,	oclc TEXT
 ,	work_id TEXT
 ,	lending_patron TEXT
