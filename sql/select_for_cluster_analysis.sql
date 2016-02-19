@@ -20,7 +20,7 @@ AND	width_scrubbed IS NOT NULL
 AND	thickness_scrubbed IS NOT NULL
 
 	-- Only consider books in the desired collection; here, a new house.
-AND	collections ~ 'New House'
+--AND	collections ~ 'New House'
 
 	-- LibraryThing's auto-generated dimensions sometimes switch around the
 	-- ordering. Until I've updated all of my records manually, this will
