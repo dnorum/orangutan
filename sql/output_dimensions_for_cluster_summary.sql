@@ -1,7 +1,11 @@
 COPY
 	(	SELECT
-			((${max_height}-${min_height})::DOUBLE PRECISION/${n_intervals}::DOUBLE PRECISION) * floor(height_scrubbed::DOUBLE PRECISION/((${max_height}-${min_height})::DOUBLE PRECISION/${n_intervals}::DOUBLE PRECISION)) + ((${max_height}-${min_height})::DOUBLE PRECISION/${n_intervals}::DOUBLE PRECISION)/2.0  AS "Height Bin"
-		,	((${max_width}-${min_width})::DOUBLE PRECISION/${n_intervals}::DOUBLE PRECISION) * floor(width_scrubbed::DOUBLE PRECISION/((${max_width}-${min_width})::DOUBLE PRECISION/${n_intervals}::DOUBLE PRECISION)) + ((${max_width}-${min_width})::DOUBLE PRECISION/${n_intervals}::DOUBLE PRECISION)/2.0  AS "width (Width) Bin"
+			CASE	WHEN	${max_height} != ${min_height}
+				THEN	((${max_height}-${min_height})::DOUBLE PRECISION/${n_intervals}::DOUBLE PRECISION) * floor(height_scrubbed::DOUBLE PRECISION/((${max_height}-${min_height})::DOUBLE PRECISION/${n_intervals}::DOUBLE PRECISION)) + ((${max_height}-${min_height})::DOUBLE PRECISION/${n_intervals}::DOUBLE PRECISION)/2.0  		ELSE	${max_height}
+				END AS "Height Bin"
+		,	CASE	WHEN	${max_width} != ${min_width}
+				THEN	((${max_width}-${min_width})::DOUBLE PRECISION/${n_intervals}::DOUBLE PRECISION) * floor(width_scrubbed::DOUBLE PRECISION/((${max_width}-${min_width})::DOUBLE PRECISION/${n_intervals}::DOUBLE PRECISION)) + ((${max_width}-${min_width})::DOUBLE PRECISION/${n_intervals}::DOUBLE PRECISION)/2.0  		ELSE	${max_width}
+				END AS "Width Bin"
 		,	COUNT(*) AS "Number of Books"
 		FROM
 			library
@@ -20,8 +24,12 @@ TO
 
 COPY
 	(	SELECT
-			((${max_height}-${min_height})::DOUBLE PRECISION/${n_intervals}::DOUBLE PRECISION) * floor(height_scrubbed::DOUBLE PRECISION/((${max_height}-${min_height})::DOUBLE PRECISION/${n_intervals}::DOUBLE PRECISION)) + ((${max_height}-${min_height})::DOUBLE PRECISION/${n_intervals}::DOUBLE PRECISION)/2.0  AS "Height Bin"
-		,	((${max_width}-${min_width})::DOUBLE PRECISION/${n_intervals}::DOUBLE PRECISION) * floor(width_scrubbed::DOUBLE PRECISION/((${max_width}-${min_width})::DOUBLE PRECISION/${n_intervals}::DOUBLE PRECISION)) + ((${max_width}-${min_width})::DOUBLE PRECISION/${n_intervals}::DOUBLE PRECISION)/2.0  AS "width (Width) Bin"
+			CASE	WHEN	${max_height} != ${min_height}
+				THEN	((${max_height}-${min_height})::DOUBLE PRECISION/${n_intervals}::DOUBLE PRECISION) * floor(height_scrubbed::DOUBLE PRECISION/((${max_height}-${min_height})::DOUBLE PRECISION/${n_intervals}::DOUBLE PRECISION)) + ((${max_height}-${min_height})::DOUBLE PRECISION/${n_intervals}::DOUBLE PRECISION)/2.0  		ELSE	${max_height}
+				END AS "Height Bin"
+		,	CASE	WHEN	${max_width} != ${min_width}
+				THEN	((${max_width}-${min_width})::DOUBLE PRECISION/${n_intervals}::DOUBLE PRECISION) * floor(width_scrubbed::DOUBLE PRECISION/((${max_width}-${min_width})::DOUBLE PRECISION/${n_intervals}::DOUBLE PRECISION)) + ((${max_width}-${min_width})::DOUBLE PRECISION/${n_intervals}::DOUBLE PRECISION)/2.0  		ELSE	${max_width}
+				END AS "Width Bin"
 		,	SUM(thickness_scrubbed) AS "Inches of Books"
 		FROM
 			library
