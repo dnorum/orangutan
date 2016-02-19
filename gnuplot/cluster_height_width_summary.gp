@@ -10,5 +10,5 @@ set dgrid3d n, n
 set palette color
 set palette model RGB
 set palette defined
-set output DIR."/plots/cluster_".cluster."/plots/book_heights_widths_summary.ps"
+set output DIR."/plots/cluster_".cluster."/book_heights_widths_summary.ps"
 splot DIR."/working/cluster_".cluster."/book_heights_widths_summary.csv" every ::1 using 1:2:3 with pm3d notitle

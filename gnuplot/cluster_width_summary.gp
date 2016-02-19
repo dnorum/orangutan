@@ -9,7 +9,7 @@ set ylabel 'Number of Books'
 set timestamp # turn on a date/time indicator
 set datafile separator ","
 set term postscript
-set output DIR."/plots/cluster_".cluster."/plots/book_widths_summary.ps"
+set output DIR."/plots/cluster_".cluster."/book_widths_summary.ps"
 width=(max-min)/n # Interval width
 # Define the function used to map a value to an interval
 hist(x,width)=width*floor(x/width)+width/2.0
