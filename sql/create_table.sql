@@ -48,4 +48,8 @@ CREATE TABLE library (
 ,	source TEXT
 ,	entry_date TEXT
 ,	oclc TEXT
-,	work_id TEXT	);
+,	work_id TEXT
+,	lending_patron TEXT
+,	lending_status TEXT
+,	lending_start TEXT
+,	lending_end TEXT	);
