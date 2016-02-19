@@ -33,7 +33,7 @@ COPY
 		ORDER BY
 			1 ASC, 2 ASC)
 TO
-	'${DIR}/working/cluster_${cluster}/book_heights_widths_summary.csv'
+	'${DIR}/working/cluster_${cluster}/book_heights_widths_weighted_summary.csv'
 (	FORMAT csv
 ,	DELIMITER ','
 ,	HEADER
