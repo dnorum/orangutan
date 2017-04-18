@@ -20,6 +20,7 @@ CREATE TABLE library (
 ,	"comment" TEXT
 ,	private_comment TEXT
 ,	summary TEXT
+,	media TEXT
 ,	physical_description TEXT
 ,	weight TEXT
 ,	height TEXT
