@@ -6,6 +6,9 @@ DIR=$(dirname "$(readlink -f "$0")")
 # Define the name of the database to be used.
 database="cluster_analysis"
 
+#Define the user
+user="JRANDOM"
+
 # Define the settings for the summary histograms.
 n_intervals=100
 
@@ -16,12 +19,12 @@ echo
 source ./subscripts/load_clusters.sh
 
 # Add the clusters to the main library table.
-psql $database -f ${DIR}/sql/add_clusters.sql > /dev/null 2>&1
+psql $database -U $user -f ${DIR}/sql/add_clusters.sql > /dev/null 2>&1
 echo "Clusters added to the main library table."
 
 # Get the number of clusters over which to loop. (Scrub the Postgres output
 # before printing it out.
-max_cluster=$(psql $database -t -c "SELECT max("cluster"::INT) FROM library")
+max_cluster=$(psql $database -U $user -t -c "SELECT max("cluster"::INT) FROM library")
 max_cluster=${max_cluster//[a-zA-Z ]/}
 echo "Looping over clusters 1 to ${max_cluster}."
 echo
@@ -52,7 +55,7 @@ while ((cluster<=max_cluster)); do
 	chmod a+w ${DIR}/plots/cluster_${cluster}
 
 	# Output the dimensional data for each cluster.
-	psql $database -c "$(sed -e "s@\${DIR}@${DIR}@g" -e "s/\${cluster}/${cluster}/g" -e "s/\${max_height}/${max_height}/g" -e "s/\${min_height}/${min_height}/g" -e "s/\${max_width}/${max_width}/g" -e "s/\${min_width}/${min_width}/g" -e "s/\${n_intervals}/${n_intervals}/g" ${DIR}/sql/output_dimensions_for_cluster_summary.sql)"
+	psql $database -U $user -c "$(sed -e "s@\${DIR}@${DIR}@g" -e "s/\${cluster}/${cluster}/g" -e "s/\${max_height}/${max_height}/g" -e "s/\${min_height}/${min_height}/g" -e "s/\${max_width}/${max_width}/g" -e "s/\${min_width}/${min_width}/g" -e "s/\${n_intervals}/${n_intervals}/g" ${DIR}/sql/output_dimensions_for_cluster_summary.sql)"
 
 	# Plot the histograms and heat maps for each cluster.
 	source ./subscripts/summary_cluster_plots.sh
