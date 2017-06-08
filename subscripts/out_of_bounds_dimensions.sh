@@ -23,10 +23,10 @@ do
 	# this is a hideously inefficient invocation inside a loop, but
 	# otherwise it's a nested eval echo construct that I've not yet wrapped
 	# my head around.
-	psql $database -c "$(sed -e "s/\${height_min}/${height_min}/g" -e "s/\${height_max}/${height_max}/g" -e "s/\${width_min}/${width_min}/g" -e "s/\${width_max}/${width_max}/g" -e "s/\${thickness_min}/${thickness_min}/g" -e "s/\${thickness_max}/${thickness_max}/g" -e "s/\${weight_min}/${weight_min}/g" -e "s/\${weight_max}/${weight_max}/g" ${DIR}/sql/null_out_of_bounds_${dimension}.sql)" > /dev/null 2>&1
+	psql $database -U $user -c "$(sed -e "s/\${height_min}/${height_min}/g" -e "s/\${height_max}/${height_max}/g" -e "s/\${width_min}/${width_min}/g" -e "s/\${width_max}/${width_max}/g" -e "s/\${thickness_min}/${thickness_min}/g" -e "s/\${thickness_max}/${thickness_max}/g" -e "s/\${weight_min}/${weight_min}/g" -e "s/\${weight_max}/${weight_max}/g" ${DIR}/sql/null_out_of_bounds_${dimension}.sql)" > /dev/null 2>&1
 
 	# Record the number of non-NULL values that are left.
-	n_dimension_non_null=$(psql $database -t -c "SELECT COUNT(*) FROM library WHERE ${dimension}_scrubbed IS NOT NULL")
+	n_dimension_non_null=$(psql $database -U $user -t -c "SELECT COUNT(*) FROM library WHERE ${dimension}_scrubbed IS NOT NULL")
 
 	# Trim whitespace.
 	n_dimension_non_null=${n_dimension_non_null// /}
