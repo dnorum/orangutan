@@ -11,7 +11,7 @@ DIR=$(dirname "$(readlink -f "$0")")
 database="cluster_analysis"
 
 #Define the user
-user="JRANDOM"
+user="escdata"
 
 # Define the settings for the summary histograms.
 n_intervals=100
