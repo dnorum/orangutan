@@ -1,2 +1,0 @@
-1) Check and update formatting of output for readability.
-2) Check for update to kmeans.R.
