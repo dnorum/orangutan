@@ -3,8 +3,10 @@ import psycopg
 import sys
 
 # Set up manual importing of under-development packages from within the repo.
+sys.path.append("python/packages/libraryThingDatabase")
 sys.path.append("python/packages/tsv2csv")
 # TODO: At some point, publish this - or find a previously-published replacement.
+import libraryThingDatabase
 import tsv2csv
 
 # TODO: Clean up how credentials are handled.
