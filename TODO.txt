@@ -1,0 +1,6 @@
+- Shift creation of database into database-module function.
+- Add default "library" schema to configuration.
+- Clean up configuration / credentials - separate out bootstrapping and mainline.
+- Add checks on schema, table existence.
+- Create schema, table.
+- Pull in LT export.
