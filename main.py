@@ -3,9 +3,11 @@ import psycopg
 import sys
 
 # Set up manual importing of under-development packages from within the repo.
+sys.path.append("python/packages/database")
 sys.path.append("python/packages/libraryThingDatabase")
 sys.path.append("python/packages/tsv2csv")
 # TODO: At some point, publish this - or find a previously-published replacement.
+import database
 import libraryThingDatabase
 import tsv2csv
 
@@ -20,10 +22,13 @@ with psycopg.connect(   dbname=credentials['postgres']['bootstrapDbName']
     connection.autocommit = True
     with connection.cursor() as cursor:
         # TODO: Find a workaround to avoid injection, but apparently PostgreSQL
-        # allow for parameterization of CREATE DATABASE... 
-        # TODO: Need to add a wrapper to kludge "IF NOT EXISTS" functionality.
-        query = "CREATE DATABASE " + credentials['postgres']['dbName'] + ";"
-        cursor.execute(query)
+        # allow for parameterization of CREATE DATABASE...
+        dbName = credentials['postgres']['dbName']
+        if not database.databaseExists(connection, dbName):
+            query = "CREATE DATABASE " + dbName + ";"
+            cursor.execute(query)
+        else:
+            print("Database {dbName} already exists.".format(**{'dbName': dbName}))
        
 
 # Convert the TSV dump file from LibraryThing into CSV.
