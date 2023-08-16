@@ -13,10 +13,18 @@ import tsv2csv
 with open("config/credentials.json") as jsonFile:
     credentials = json.load(jsonFile)
 
-dbConnection = psycopg.connect( dbname=credentials['postgres']['bootstrapDbName']
-                            ,   user=credentials['postgres']['user']
-                            ,   host=credentials['postgres']['host']
-                            ,   password=credentials['postgres']['password'] )
+with psycopg.connect(   dbname=credentials['postgres']['bootstrapDbName']
+                    ,   user=credentials['postgres']['user']
+                    ,   host=credentials['postgres']['host']
+                    ,   password=credentials['postgres']['password'] ) as connection:
+    connection.autocommit = True
+    with connection.cursor() as cursor:
+        # TODO: Find a workaround to avoid injection, but apparently PostgreSQL
+        # allow for parameterization of CREATE DATABASE... 
+        # TODO: Need to add a wrapper to kludge "IF NOT EXISTS" functionality.
+        query = "CREATE DATABASE " + credentials['postgres']['dbName'] + ";"
+        cursor.execute(query)
+       
 
 # Convert the TSV dump file from LibraryThing into CSV.
 #tsv2csv.tsv2csv("sample_data/librarything_sample.tsv")
