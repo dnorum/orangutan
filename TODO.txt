@@ -2,4 +2,3 @@
 - Add checks on schema, table existence.
 - Create schema, table.
 - Pull in LT export.
-- database.validateIdentifier(string)
