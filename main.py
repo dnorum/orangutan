@@ -18,8 +18,12 @@ with open("credentials/postgres.json") as jsonFile:
 
 connectionSettings = {**postgresConfig["bootstrap"], **postgresCredentials["bootstrap"]}
 
-database.createDatabase(connectionSettings, postgresConfig["prod"]["dbname"])
-       
+dbname = postgresConfig["prod"]["dbname"]
+# schema = postgresConfig["prod"]["schema"]
+# table = postgresConfig["prod"]["table"]
+database.createDatabase(connectionSettings, dbname)
+# database.createSchema(connectionSettings, schema)
+# database.createTable(connectionSettings, table)
 
 # Convert the TSV dump file from LibraryThing into CSV.
 #tsv2csv.tsv2csv("sample_data/librarything_sample.tsv")
