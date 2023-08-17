@@ -3,7 +3,6 @@ To set up the PostgreSQL user 'orangutan':
 	# create user orangutan with encrypted password 'ook';
 	# ALTER USER orangutan CREATEDB;
 
-
 	Create a /resources folder in the main project directory (not included in
 the project repo because it just holds library-specific source files), then 
 download the LibraryThing TSV export into that /resources/ folder as
