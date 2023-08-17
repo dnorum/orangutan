@@ -18,17 +18,7 @@ with open("credentials/postgres.json") as jsonFile:
 
 connectionSettings = {**postgresConfig["bootstrap"], **postgresCredentials["bootstrap"]}
 
-with psycopg.connect(**connectionSettings) as connection:
-    connection.autocommit = True
-    with connection.cursor() as cursor:
-        # TODO: Find a workaround to avoid injection, but apparently PostgreSQL
-        # doesn't allow for parameterization of CREATE DATABASE...
-        dbName = postgresConfig["prod"]["dbname"]
-        if not database.databaseExists(connection, dbName):
-            query = "CREATE DATABASE " + dbName + ";"
-            cursor.execute(query)
-        else:
-            print("Database {dbName} already exists.".format(**{'dbName': dbName}))
+database.createDatabase(connectionSettings, postgresConfig["prod"]["dbname"])
        
 
 # Convert the TSV dump file from LibraryThing into CSV.

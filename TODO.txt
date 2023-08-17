@@ -1,5 +1,5 @@
-- Shift creation of database into database-module function.
 - Add default "library" schema to configuration.
 - Add checks on schema, table existence.
 - Create schema, table.
 - Pull in LT export.
+- database.validateIdentifier(string)
