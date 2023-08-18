@@ -56,9 +56,6 @@ kmeans.R
 Peeples, Matthew A.
 2011 R Script for K-Means Cluster Analysis. Electronic document, http://www.mattpeeples.net/kmeans.html, accessed January 29, 2016.
 
-tsv2csv.py
-https://gist.github.com/nsonnad/7598574
-
 Miscellaneous Links:
 Git - https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
 PostgreSQL - https://help.ubuntu.com/community/PostgreSQL

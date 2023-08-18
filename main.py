@@ -5,11 +5,8 @@ import sys
 # Set up manual importing of under-development packages from within the repo.
 sys.path.append("python/packages/database")
 sys.path.append("python/packages/library_thing_database")
-# TODO: At some point, publish this - or find a previously-published replacement.
-sys.path.append("python/packages/tsv2csv")
 import database
 import library_thing_database
-import tsv2csv
 
 postgres = {}
 
@@ -38,7 +35,6 @@ if not database.database_exists(connection_settings, database_name):
 
 # Switch to production and create the schema.
 connection_settings = database.extract_connection_settings(postgres["prod"])
-database.create_schema(connection_settings, database_name, schema_name)
-
-# Convert the TSV dump file from LibraryThing into CSV.
-#tsv2csv.tsv2csv("sample_data/librarything_sample.tsv")
+# Wrapper for idempotent development re-runs.
+if not database.schema_exists(connection_settings, database_name, schema_name):
+    database.create_schema(connection_settings, database_name, schema_name)
