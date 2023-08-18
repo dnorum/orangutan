@@ -11,20 +11,34 @@ import database
 import library_thing_database
 import tsv2csv
 
-# TODO: Combine into a single object.
+postgres = {}
+
 with open("config/postgres.json") as json_file:
     postgres_config = json.load(json_file)
+for stage in postgres_config:
+    if stage not in postgres:
+        postgres[stage] = {}
+    postgres[stage] = {**postgres[stage], **postgres_config[stage]}
+
 with open("credentials/postgres.json") as json_file:
     postgres_credentials = json.load(json_file)
+for stage in postgres_credentials:
+    if stage not in postgres:
+        postgres[stage] = {}
+    postgres[stage] = {**postgres[stage], **postgres_credentials[stage]}
 
-connection_settings = {**postgres_config["bootstrap"], **postgres_credentials["bootstrap"]}
+database_name = postgres["prod"]["database_name"]
+schema_name = postgres["prod"]["schema_name"]
 
-# Rename "database_name" to "dbName" for psycopg compatibility.
-connection_settings["dbname"] = connection_settings["database_name"]
-del connection_settings["database_name"]
+# Log into bootstrapping environment to create production database.
+connection_settings = database.extract_connection_settings(postgres["bootstrap"])
+# Wrapper for idempotent development re-runs.
+if not database.database_exists(connection_settings, database_name):
+    database.create_database(connection_settings, database_name)
 
-database_name = postgres_config["prod"]["database_name"]
-database.create_database(connection_settings, database_name)
+# Switch to production and create the schema.
+connection_settings = database.extract_connection_settings(postgres["prod"])
+database.create_schema(connection_settings, database_name, schema_name)
 
 # Convert the TSV dump file from LibraryThing into CSV.
 #tsv2csv.tsv2csv("sample_data/librarything_sample.tsv")
