@@ -12,6 +12,14 @@ def databaseExists(connection, dbName):
         print(error)
     return exists
 
+def schemaExists(connection, database, schema):
+    exists = False
+    return exists
+
+def tableExists(connection, database, schema, table):
+    exists = False
+    return exists
+
 def validateIdentifier(identifier):
     # Note: This is close to, but not exactly what's defined in the PostgreSQL standard -
     # since the goal is to belt-and-suspenders against injection (unintentional or otherwise),
