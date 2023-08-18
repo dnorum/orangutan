@@ -3,6 +3,12 @@ To set up the PostgreSQL user 'orangutan':
 	# create user orangutan with encrypted password 'ook';
 	# ALTER USER orangutan CREATEDB;
 
+I'm _attempting_ to follow the Google Python Style Guide -
+https://google.github.io/styleguide/pyguide.html - but it's a work in progress
+and by no means have I gone through to ensure rigorous compliance.
+
+
+FOLLOWING TO UPDATE / DEPRECATE AS NEEDED:
 	Create a /resources folder in the main project directory (not included in
 the project repo because it just holds library-specific source files), then 
 download the LibraryThing TSV export into that /resources/ folder as

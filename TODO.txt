@@ -1,3 +1,5 @@
+- Standardize variable, function name formats.
+- Create (database(, schema(, table))) objects.
 - Add default "library" schema to configuration.
 - Add checks on schema, table existence.
 - Create schema, table.

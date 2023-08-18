@@ -1,0 +1,3 @@
+0.1.0 Targets:
+- Load a LibraryThing export file into a local database.
+- Run a sample query on that database and return the results.
