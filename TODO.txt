@@ -1,5 +1,7 @@
-- Turn query snippets into external files in database module.
+- Turn query snippets into external files in (library_thing_)database module.
 - Create table.
 - Pull in LT export.
+- Sample query.
+- 0.1.0 release.
 
 ? Create (database(, schema(, table))) objects?

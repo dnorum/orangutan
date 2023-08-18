@@ -38,3 +38,6 @@ connection_settings = database.extract_connection_settings(postgres["prod"])
 # Wrapper for idempotent development re-runs.
 if not database.schema_exists(connection_settings, database_name, schema_name):
     database.create_schema(connection_settings, database_name, schema_name)
+
+# Create the table in the library schema.
+# Load the data into the table.

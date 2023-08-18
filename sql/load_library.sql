@@ -4,4 +4,4 @@ COPY library FROM '${DIR}/resources/librarything.csv'
 	NULL ''
 	CSV
 	HEADER
-	ENCODING 'latin1';
+	ENCODING 'utf-8';

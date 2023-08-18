@@ -5,7 +5,7 @@ DROP TABLE IF EXISTS
 
 -- The LibraryThing dump will be pulled in as straight text for now, with the
 -- dimensional fields scrubbed and converted as needed in a later step.
-CREATE TABLE library (
+CREATE TABLE book_stack (
 	book_id TEXT
 ,	title TEXT
 ,	sort_character TEXT
