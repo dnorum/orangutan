@@ -21,9 +21,10 @@ def table_exists(connection, database_name, schema_name, table_name):
     return exists
 
 def validate_identifier(identifier):
-    # Note: This is close to, but not exactly what's defined in the PostgreSQL standard -
-    # since the goal is to belt-and-suspenders against injection (unintentional or otherwise),
-    # it clamps down on allowable characters, but does _not_ check for reserved keywords.
+    # Note that this is close to, but not identical to the PostgreSQL standard.
+    # Since the goal is to provide a belt-and-suspenders guard against injection
+    # (unintentional or otherwise), this function is stricter about allowable
+    # characters, but does _not_ check against reserved keywords.
     format_string = '[A-Za-z_][A-Za-z0-9_]{,62}'
     format = re.compile(format_string)
     if not re.fullmatch(format, identifier):
@@ -35,8 +36,8 @@ def create_database(connection_settings, database_name):
         connection.autocommit = True
         with connection.cursor() as cursor:
             if not database_exists(connection, database_name):
-                # PostgreSQL doesn't allow for parameterization of CREATE DATABASE, so check the database name
-                # manually.
+                # PostgreSQL doesn't allow parameterizing CREATE DATABASE, so
+                # we check the database name manually.
                 validate_identifier(database_name)
                 query = "CREATE DATABASE " + database_name + ";"
                 # QUESTION: Additional check here, maybe?
