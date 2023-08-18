@@ -5,6 +5,7 @@
 	},
 	"prod": {
 		"database_name": "orangutan",
-		"host": "localhost"
+		"host": "localhost",
+		"schema_name": "library"
 	}
 }
