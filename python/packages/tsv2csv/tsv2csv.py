@@ -1,15 +1,14 @@
-# From GitHub nsonnad/tsv2csv.py, https://gist.github.com/nsonnad/7598574
-import sys
 import csv
+import sys
 
 # TODO: Add optional output file name != input file - default to same.
 # TODO: Add error-checking for TSV file existence.
 # TODO: Add error-checking for CSV file existence (w.r.t. overwriting)..
-def tsv2csv(tsvFilename):
-	with open(tsvFilename, 'r') as tsvFile:
-		tsvIn = csv.reader(tsvFile, dialect=csv.excel_tab)
-		csvFilename = tsvFilename[:-3] + 'csv'
-		with open(csvFilename, 'w') as csvFile:
-			csvOut = csv.writer(csvFile, dialect=csv.excel)
-			for row in tsvIn:
-				csvOut.writerow(row)
+def tsv2csv(tsv_filename):
+	with open(tsv_filename, 'r') as tsv_file:
+		tsv_in = csv.reader(tsv_file, dialect=csv.excel_tab)
+		csv_filename = tsv_filename[:-3] + 'csv'
+		with open(csv_filename, 'w') as csv_file:
+			csv_out = csv.writer(csv_file, dialect=csv.excel)
+			for row in tsv_in:
+				csv_out.writerow(row)

@@ -1,10 +1,10 @@
 {
 	"bootstrap": {
-		"dbname": "postgres",
+		"database_name": "postgres",
 		"host": "localhost"
 	},
 	"prod": {
-		"dbname": "orangutan",
+		"database_name": "orangutan",
 		"host": "localhost"
 	}
 }
