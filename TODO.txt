@@ -1,6 +1,5 @@
-- Standardize variable, function name formats.
-- Create (database(, schema(, table))) objects.
-- Add default "library" schema to configuration.
-- Add checks on schema, table existence.
-- Create schema, table.
+- Turn query snippets into external files in database module.
+- Create table.
 - Pull in LT export.
+
+? Create (database(, schema(, table))) objects?
