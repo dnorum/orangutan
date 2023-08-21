@@ -15,6 +15,11 @@ class Table:
         self.schema = schema
         self.name = name
 
+def check_connection_database(connection_settings, database):
+    if not connection_settings["dbname"] == database.name:
+        raise ValueError(f'Database {database.name} specified, but connected '
+                         f'to {connection_settings["dbname"]}.')
+
 def extract_connection_settings(postgres):
     connection_settings = postgres
     # Rename database_name to dbname for psycopg compatibility.
@@ -40,6 +45,7 @@ def database_exists(connection_settings, database):
     return exists
 
 def schema_exists(connection_settings, schema):
+    check_connection_database(connection_settings, schema.database)
     exists = False
     with psycopg.connect(**connection_settings) as connection:
         if not connection_settings["dbname"] == schema.database.name:
@@ -59,6 +65,7 @@ def schema_exists(connection_settings, schema):
     return exists
 
 def table_exists(connection_settings, table):
+    check_connection_database(connection_settings, table.schema.database)
     exists = False
     with psycopg.connect(**connection_settings) as connection:
         if not schema_exists(connection_settings, table.schema):
@@ -85,6 +92,7 @@ def validate_identifier(identifier):
     return 0
 
 def create_database(connection_settings, database):
+    check_connection_database(connection_settings, database)
     with psycopg.connect(**connection_settings) as connection:
         connection.autocommit = True
         with connection.cursor() as cursor:
@@ -100,6 +108,7 @@ def create_database(connection_settings, database):
     return 0
 
 def create_schema(connection_settings, schema):
+    check_connection_database(connection_settings, database)
     with psycopg.connect(**connection_settings) as connection:
         connection.autocommit = True
         with connection.cursor() as cursor:

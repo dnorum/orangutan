@@ -1,4 +1,5 @@
 - Pull in LT export.
+- Update to use psycopg's sql module.
 - Convert dimensions.
 - Sample query and pull out stats.
 - ggplot (basic).
