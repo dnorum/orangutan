@@ -5,7 +5,7 @@ import sys
 # Set up manual importing of under-development packages from within the repo.
 sys.path.append("python/packages/database")
 sys.path.append("python/packages/library_thing_database")
-import database
+import database as db
 import library_thing_database
 
 postgres = {}
@@ -24,20 +24,20 @@ for stage in postgres_credentials:
         postgres[stage] = {}
     postgres[stage] = {**postgres[stage], **postgres_credentials[stage]}
 
-database_name = postgres["prod"]["database_name"]
-schema_name = postgres["prod"]["schema_name"]
+database = db.Database(postgres["prod"]["database_name"])
+schema = db.Schema(database, postgres["prod"]["schema_name"])
 
 # Log into bootstrapping environment to create production database.
-connection_settings = database.extract_connection_settings(postgres["bootstrap"])
+connection_settings = db.extract_connection_settings(postgres["bootstrap"])
 # Wrapper for idempotent development re-runs.
-if not database.database_exists(connection_settings, database_name):
-    database.create_database(connection_settings, database_name)
+if not db.database_exists(connection_settings, database):
+    db.create_database(connection_settings, database)
 
 # Switch to production and create the schema.
-connection_settings = database.extract_connection_settings(postgres["prod"])
+connection_settings = db.extract_connection_settings(postgres["prod"])
 # Wrapper for idempotent development re-runs.
-if not database.schema_exists(connection_settings, database_name, schema_name):
-    database.create_schema(connection_settings, database_name, schema_name)
+if not db.schema_exists(connection_settings, schema):
+    db.create_schema(connection_settings, schema)
 
 # Create the table in the library schema.
 # Load the data into the table.

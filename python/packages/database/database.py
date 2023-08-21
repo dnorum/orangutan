@@ -1,6 +1,20 @@
 import psycopg
 import re
 
+class Database:
+    def __init__(self, name):
+        self.name = name
+
+class Schema:
+    def __init__(self, database, name):
+        self.database = database
+        self.name = name
+
+class Table:
+    def __init__(self, schema, name):
+        self.schema = schema
+        self.name = name
+
 def extract_connection_settings(postgres):
     connection_settings = postgres
     # Rename database_name to dbname for psycopg compatibility.
@@ -15,39 +29,45 @@ def extract_connection_settings(postgres):
             del connection_settings[key]
     return connection_settings    
 
-def database_exists(connection_settings, database_name):
+def database_exists(connection_settings, database):
     exists = False
     with psycopg.connect(**connection_settings) as connection:
         with connection.cursor() as cursor:
             query = ("SELECT EXISTS(SELECT datname FROM pg_database "
-                     f"WHERE datname = '{database_name}')")
+                     f"WHERE datname = '{database.name}')")
             cursor.execute(query)
             exists = cursor.fetchone()[0]
     return exists
 
-def schema_exists(connection_settings, database_name, schema_name):
+def schema_exists(connection_settings, schema):
     exists = False
     with psycopg.connect(**connection_settings) as connection:
-        if not database_exists(connection_settings, database_name):
-            raise ValueError(f'Database {database_name} does not exist.')
+        if not connection_settings["dbname"] == schema.database.name:
+            raise ValueError(f'Connected to database '
+                             f'{connection_settings.dbname} but looking for '
+                             f'schema {schema.name} in database '
+                             f'{schema.database.name}.')
+        # QUESTION: Given above, do I need this? Is this issue even possible?
+        if not database_exists(connection_settings, schema.database):
+            raise ValueError(f'Database {schema.database.name} does not exist.')
         with connection.cursor() as cursor:
             query = ("SELECT EXISTS(SELECT schema_name "
                      "FROM information_schema.schemata "
-                     f"WHERE schema_name = '{schema_name}');")
+                     f"WHERE schema_name = '{schema.name}');")
             cursor.execute(query)
             exists = cursor.fetchone()[0]
     return exists
 
-def table_exists(connection_settings, database_name, schema_name, table_name):
+def table_exists(connection_settings, table):
     exists = False
     with psycopg.connect(**connection_settings) as connection:
-        if not schema_exists(connection_settings, database_name, schema_name):
-            raise ValueError(f'Schema {schema_name} does not exist.')
+        if not schema_exists(connection_settings, table.schema):
+            raise ValueError(f'Schema {table.schema.name} does not exist.')
         with connection.cursor() as cursor:
             query = ("SELECT EXISTS(SELECT table_name "
                      "FROM information_schema.tables "
-                     f"WHERE table_schema = '{schema_name}'"
-                     f"AND table_name = '{table_name}');")
+                     f"WHERE table_schema = '{table.schema.name}'"
+                     f"AND table_name = '{table.name}');")
             cursor.execute(query)
             exists = cursor.fetchone()[0]
     return exists
@@ -64,32 +84,32 @@ def validate_identifier(identifier):
                          f"requirement: /{format_string}/")
     return 0
 
-def create_database(connection_settings, database_name):
+def create_database(connection_settings, database):
     with psycopg.connect(**connection_settings) as connection:
         connection.autocommit = True
         with connection.cursor() as cursor:
-            if database_exists(connection_settings, database_name):
-                raise ValueError(f"Database '{database_name}' already exists.")
+            if database_exists(connection_settings, database):
+                raise ValueError(f"Database '{database.name}' already exists.")
             else:
                 # PostgreSQL doesn't allow parameterizing CREATE DATABASE, so
                 # we check the database name manually.
-                validate_identifier(database_name)
-                query = f"CREATE DATABASE {database_name};"
+                validate_identifier(database.name)
+                query = f"CREATE DATABASE {database.name};"
                 # QUESTION: Additional check here, maybe?
                 cursor.execute(query)
     return 0
 
-def create_schema(connection_settings, database_name, schema_name):
+def create_schema(connection_settings, schema):
     with psycopg.connect(**connection_settings) as connection:
         connection.autocommit = True
         with connection.cursor() as cursor:
-            if schema_exists(connection_settings, database_name, schema_name):
-                raise ValueError(f"Schema '{schema_name}' already exists.")
+            if schema_exists(connection_settings, schema):
+                raise ValueError(f"Schema '{schema.name}' already exists.")
             else:
                 # PostgreSQL doesn't allow parameterizing CREATE SCHEMA, so
                 # we check the schema name manually.
-                validate_identifier(schema_name)
-                query = f"CREATE SCHEMA {schema_name};"
+                validate_identifier(schema.name)
+                query = f"CREATE SCHEMA {schema.name};"
                 # QUESTION: Additional check here, maybe?
                 cursor.execute(query)
     return 0

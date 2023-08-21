@@ -1,7 +1,9 @@
 - Turn query snippets into external files in (library_thing_)database module.
 - Create table.
 - Pull in LT export.
-- Sample query.
+- Convert dimensions.
+- Sample query and pull out stats.
+- ggplot (basic).
+- switch documentation over to markdown
+- add note about using .pgpass
 - 0.1.0 release.
-
-? Create (database(, schema(, table))) objects?
