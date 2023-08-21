@@ -1,4 +1,6 @@
+import pkgutil
 import psycopg
+from psycopg import sql
 import re
 
 class Database:
@@ -15,51 +17,44 @@ class Table:
         self.schema = schema
         self.name = name
 
+def _load_snippet(function_name):
+    query_bytes = pkgutil.get_data(__name__, f'sql/{function_name}.sql')
+    query_string = query_bytes.decode()
+    return query_string
+
 def check_connection_database(connection_settings, database):
     if not connection_settings["dbname"] == database.name:
         raise ValueError(f'Database {database.name} specified, but connected '
                          f'to {connection_settings["dbname"]}.')
 
 def extract_connection_settings(postgres):
-    connection_settings = postgres
+    connection_settings = {}
+    for key in postgres:
+        if key in ("host", "database_name", "user", "password"):
+            connection_settings[key] = postgres[key]
     # Rename database_name to dbname for psycopg compatibility.
     connection_settings["dbname"] = connection_settings["database_name"]
-    # Remove unused entries. Note that this list isn't exhaustive, and this
-    # function should be updated to be more simpatico with psycopg's API.
-    keys = []
-    for key in connection_settings:
-        keys.append(key)
-    for key in keys:
-        if key not in ("host", "dbname", "user", "password"):
-            del connection_settings[key]
+    del connection_settings["database_name"]
     return connection_settings    
 
 def database_exists(connection_settings, database):
     exists = False
     with psycopg.connect(**connection_settings) as connection:
         with connection.cursor() as cursor:
-            query = ("SELECT EXISTS(SELECT datname FROM pg_database "
-                     f"WHERE datname = '{database.name}')")
+            query_string = _load_snippet("database_exists")
+            query = sql.SQL(query_string).format(database=sql.Literal(database.name))
             cursor.execute(query)
             exists = cursor.fetchone()[0]
     return exists
 
 def schema_exists(connection_settings, schema):
+    # Removes need for checking if database exists.
     check_connection_database(connection_settings, schema.database)
     exists = False
     with psycopg.connect(**connection_settings) as connection:
-        if not connection_settings["dbname"] == schema.database.name:
-            raise ValueError(f'Connected to database '
-                             f'{connection_settings.dbname} but looking for '
-                             f'schema {schema.name} in database '
-                             f'{schema.database.name}.')
-        # QUESTION: Given above, do I need this? Is this issue even possible?
-        if not database_exists(connection_settings, schema.database):
-            raise ValueError(f'Database {schema.database.name} does not exist.')
         with connection.cursor() as cursor:
-            query = ("SELECT EXISTS(SELECT schema_name "
-                     "FROM information_schema.schemata "
-                     f"WHERE schema_name = '{schema.name}');")
+            query_string = _load_snippet("schema_exists")
+            query = sql.SQL(query_string).format(schema=sql.Literal(schema.name))
             cursor.execute(query)
             exists = cursor.fetchone()[0]
     return exists
@@ -70,40 +65,24 @@ def table_exists(connection_settings, table):
     with psycopg.connect(**connection_settings) as connection:
         if not schema_exists(connection_settings, table.schema):
             raise ValueError(f'Schema {table.schema.name} does not exist.')
-        with connection.cursor() as cursor:
-            query = ("SELECT EXISTS(SELECT table_name "
-                     "FROM information_schema.tables "
-                     f"WHERE table_schema = '{table.schema.name}'"
-                     f"AND table_name = '{table.name}');")
-            cursor.execute(query)
-            exists = cursor.fetchone()[0]
+        else:
+            with connection.cursor() as cursor:
+                query_string = _load_snippet("table_exists")
+                query = sql.SQL(query_string).format(schema=sql.Literal(table.schema.name),
+                                                     table=sql.Literal(table.name))
+                cursor.execute(query)
+                exists = cursor.fetchone()[0]
     return exists
 
-def validate_identifier(identifier):
-    # Note that this is close to, but not identical to the PostgreSQL standard.
-    # Since the goal is to provide a belt-and-suspenders guard against injection
-    # (unintentional or otherwise), this function is stricter about allowable
-    # characters, but does _not_ check against reserved keywords.
-    format_string = '[A-Za-z_][A-Za-z0-9_]{,62}'
-    format = re.compile(format_string)
-    if not re.fullmatch(format, identifier):
-        raise ValueError(f"Identifier: '{identifier}' violates format "
-                         f"requirement: /{format_string}/")
-    return 0
-
 def create_database(connection_settings, database):
-    check_connection_database(connection_settings, database)
     with psycopg.connect(**connection_settings) as connection:
         connection.autocommit = True
         with connection.cursor() as cursor:
             if database_exists(connection_settings, database):
                 raise ValueError(f"Database '{database.name}' already exists.")
             else:
-                # PostgreSQL doesn't allow parameterizing CREATE DATABASE, so
-                # we check the database name manually.
-                validate_identifier(database.name)
-                query = f"CREATE DATABASE {database.name};"
-                # QUESTION: Additional check here, maybe?
+                query_string = _load_snippet("create_database")
+                query = sql.SQL(query_string).format(database=sql.Identifier(database.name))
                 cursor.execute(query)
     return 0
 
@@ -115,10 +94,7 @@ def create_schema(connection_settings, schema):
             if schema_exists(connection_settings, schema):
                 raise ValueError(f"Schema '{schema.name}' already exists.")
             else:
-                # PostgreSQL doesn't allow parameterizing CREATE SCHEMA, so
-                # we check the schema name manually.
-                validate_identifier(schema.name)
-                query = f"CREATE SCHEMA {schema.name};"
-                # QUESTION: Additional check here, maybe?
+                query_string = _load_snippet("create_schema")
+                query = sql.SQL(query_string).format(schema=sql.Identifier(schema.name))
                 cursor.execute(query)
     return 0

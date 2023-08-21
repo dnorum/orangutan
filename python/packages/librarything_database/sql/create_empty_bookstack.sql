@@ -1,4 +1,4 @@
-CREATE TABLE {schema_name}.bookstack (
+CREATE TABLE {schema}.{table} (
 	book_id TEXT
 ,	title TEXT
 ,	sort_character TEXT
