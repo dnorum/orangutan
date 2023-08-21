@@ -1,5 +1,3 @@
-- Turn query snippets into external files in (library_thing_)database module.
-- Create table.
 - Pull in LT export.
 - Convert dimensions.
 - Sample query and pull out stats.

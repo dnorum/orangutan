@@ -6,7 +6,7 @@ import sys
 sys.path.append("python/packages/database")
 sys.path.append("python/packages/library_thing_database")
 import database as db
-import library_thing_database
+import library_thing_database as lt
 
 postgres = {}
 
@@ -40,4 +40,6 @@ if not db.schema_exists(connection_settings, schema):
     db.create_schema(connection_settings, schema)
 
 # Create the table in the library schema.
+lt.create_empty_bookstack(connection_settings, schema)
+
 # Load the data into the table.

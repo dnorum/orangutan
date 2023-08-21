@@ -1,11 +1,4 @@
--- Make sure that the table will be created with the desired format. Note that
--- no schema is specified, although one can be.
-DROP TABLE IF EXISTS
-	library;
-
--- The LibraryThing dump will be pulled in as straight text for now, with the
--- dimensional fields scrubbed and converted as needed in a later step.
-CREATE TABLE book_stack (
+CREATE TABLE {schema_name}.bookstack (
 	book_id TEXT
 ,	title TEXT
 ,	sort_character TEXT
