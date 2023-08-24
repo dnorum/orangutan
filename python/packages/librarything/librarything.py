@@ -34,3 +34,26 @@ def import_bookstack(connection_settings, librarything_export, table):
                 with cursor.copy(query) as copy:
                     while books := librarything_export_file.read(100):
                         copy.write(books)
+
+def convert_measure_fields(connection_settings, table, columns, unit, suffix):
+    with psycopg.connect(**connection_settings) as connection:
+        connection.autocommit = True
+        if not squirrel.table_exists(connection_settings, table):
+            raise ValueError(f'Table {table.name} does not exist.')
+        for column in columns:
+            squirrel.rename_column(connection_settings, squirrel.Column(table, column), f"{column}{suffix}")
+            squirrel.add_column(connection_settings, squirrel.Column(table, column), "double")
+            with connection.cursor() as cursor:
+                query_string = _load_snippet(f"convert_measure_fields_{unit}")
+                query = sql.SQL(query_string).format(schema=sql.Identifier(table.schema.name),
+                                                     table=sql.Identifier(table.name),
+                                                     column=sql.Identifier(column),
+                                                     source_column=sql.Identifier(f"{column}{suffix}"))
+                with connection.cursor() as cursor:
+                    cursor.execute(query)
+
+
+
+
+
+# Eclipse scrollbar...

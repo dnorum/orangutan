@@ -35,6 +35,10 @@ if not squirrel.database_exists(connection_settings, database):
 
 # Switch to production and create the schema.
 connection_settings = squirrel.extract_connection_settings(postgres["prod"])
+
+# Ensure that there's no cruft left over from previous development runs.
+squirrel.drop_schema_if_exists(connection_settings, schema)
+
 # Wrapper for idempotent development re-runs.
 if not squirrel.schema_exists(connection_settings, schema):
     squirrel.create_schema(connection_settings, schema)
@@ -42,10 +46,14 @@ if not squirrel.schema_exists(connection_settings, schema):
 # Create the table in the library schema.
 # Wrapper for idempotent development re-runs.
 if not squirrel.table_exists(connection_settings, table):
-    librarything.create_empty_bookstack(connection_settings, schema)
+    librarything.create_empty_bookstack(connection_settings, table)
 
 # Load the data into the table.
 librarything.import_bookstack(connection_settings, "data/librarything_dnorum.csv", table)
+
+# Convert the length measurement fields.
+librarything.convert_measure_fields(connection_settings, table, ["height", "thickness", "width"], "inch", "_str")
+
 
 
 # To force the last line up above the horizontal scrollbar, because Eclipse has

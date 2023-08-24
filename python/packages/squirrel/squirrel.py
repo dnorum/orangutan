@@ -17,6 +17,11 @@ class Table:
         self.schema = schema
         self.name = name
 
+class Column:
+    def __init__(self, table, name):
+        self.table = table
+        self.name = name
+
 def _load_snippet(function_name):
     query_bytes = pkgutil.get_data(__name__, f'sql/{function_name}.sql')
     query_string = query_bytes.decode()
@@ -74,6 +79,22 @@ def table_exists(connection_settings, table):
                 exists = cursor.fetchone()[0]
     return exists
 
+def column_exists(connection_settings, column):
+    check_connection_database(connection_settings, column.table.schema.database)
+    exists = False
+    with psycopg.connect(**connection_settings) as connection:
+        if not table_exists(connection_settings, column.table):
+            raise ValueError(f'Table {column.table.name} does not exist.')
+        else:
+            with connection.cursor() as cursor:
+                query_string = _load_snippet("column_exists")
+                query = sql.SQL(query_string).format(schema=sql.Literal(column.table.schema.name),
+                                                     table=sql.Literal(column.table.name),
+                                                     column=sql.Literal(column.name))
+                cursor.execute(query)
+                exists = cursor.fetchone()[0]
+    return exists
+
 def create_database(connection_settings, database):
     with psycopg.connect(**connection_settings) as connection:
         connection.autocommit = True
@@ -87,7 +108,7 @@ def create_database(connection_settings, database):
     return 0
 
 def create_schema(connection_settings, schema):
-    check_connection_database(connection_settings, database)
+    check_connection_database(connection_settings, schema.database)
     with psycopg.connect(**connection_settings) as connection:
         connection.autocommit = True
         with connection.cursor() as cursor:
@@ -98,3 +119,50 @@ def create_schema(connection_settings, schema):
                 query = sql.SQL(query_string).format(schema=sql.Identifier(schema.name))
                 cursor.execute(query)
     return 0
+
+def drop_schema_if_exists(connection_settings, schema):
+    check_connection_database(connection_settings, schema.database)
+    with psycopg.connect(**connection_settings) as connection:
+        connection.autocommit = True
+        with connection.cursor() as cursor:
+            query_string = _load_snippet("drop_schema_if_exists")
+            query = sql.SQL(query_string).format(schema=sql.Identifier(schema.name))
+            cursor.execute(query)
+    return 0
+
+def rename_column(connection_settings, column, name):
+    check_connection_database(connection_settings, column.table.schema.database)
+    with psycopg.connect(**connection_settings) as connection:
+        connection.autocommit = True
+        with connection.cursor() as cursor:
+            if not column_exists(connection_settings, column):
+                raise ValueError(f"Column '{column.name}' doesn't exist.")
+            else:
+                query_string = _load_snippet("rename_column")
+                query = sql.SQL(query_string).format(schema=sql.Identifier(column.table.schema.name),
+                                                     table=sql.Identifier(column.table.name),
+                                                     column=sql.Identifier(column.name),
+                                                     name=sql.Identifier(name))
+                cursor.execute(query)
+    return 0
+
+def add_column(connection_settings, column, type):
+    check_connection_database(connection_settings, column.table.schema.database)
+    with psycopg.connect(**connection_settings) as connection:
+        connection.autocommit = True
+        with connection.cursor() as cursor:
+            if column_exists(connection_settings, column):
+                raise ValueError(f"Column '{column.name}' already exists.")
+            else:
+                query_string = _load_snippet(f"add_{type}_column")
+                query = sql.SQL(query_string).format(schema=sql.Identifier(column.table.schema.name),
+                                                     table=sql.Identifier(column.table.name),
+                                                     column=sql.Identifier(column.name))
+                cursor.execute(query)
+    return 0
+
+
+
+
+
+# Eclipse scrollbar...
