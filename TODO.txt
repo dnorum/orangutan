@@ -2,3 +2,7 @@
 - switch documentation over to markdown
 - add note about using .pgpass
 - 0.1.0 release.
+- add note about using mixture modeling instead of k-means
+- add instructions
+- ???
+- 0.2.0
