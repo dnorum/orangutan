@@ -54,6 +54,10 @@ librarything.import_bookstack(connection_settings, "data/librarything_dnorum.csv
 # Convert the length measurement fields.
 librarything.convert_measure_fields(connection_settings, table, ["height", "thickness", "width"], "inch", "_str")
 
+# Pull out the dimensional data for plotting and fitting.
+export = librarything.export_dimensional_data(connection_settings, table, "discrete")
+for bin in export:
+    print(str(bin))
 
 
 # To force the last line up above the horizontal scrollbar, because Eclipse has

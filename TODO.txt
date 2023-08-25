@@ -1,4 +1,3 @@
-- Sample query and pull out stats.
 - ggplot (basic).
 - switch documentation over to markdown
 - add note about using .pgpass
