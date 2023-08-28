@@ -9,19 +9,13 @@ import squirrel
 
 postgres = {}
 
-with open("config/postgres.json") as json_file:
-    postgres_config = json.load(json_file)
-for stage in postgres_config:
-    if stage not in postgres:
-        postgres[stage] = {}
-    postgres[stage] = {**postgres[stage], **postgres_config[stage]}
-
-with open("credentials/postgres.json") as json_file:
-    postgres_credentials = json.load(json_file)
-for stage in postgres_credentials:
-    if stage not in postgres:
-        postgres[stage] = {}
-    postgres[stage] = {**postgres[stage], **postgres_credentials[stage]}
+for tranche in ("config", "credentials"):
+    with open(f"{tranche}/postgres.json") as json_file:
+        json_data = json.load(json_file)
+    for stage in json_data:
+        if stage not in postgres:
+            postgres[stage] = {}
+        postgres[stage] = {**postgres[stage], **json_data[stage]}
 
 database = squirrel.Database(postgres["prod"]["database_name"])
 schema = squirrel.Schema(database, postgres["prod"]["schema_name"])
@@ -58,6 +52,9 @@ librarything.convert_measure_fields(connection_settings, table, ["height", "thic
 export = librarything.export_dimensional_data(connection_settings, table, "discrete")
 for bin in export:
     print(str(bin))
+
+
+
 
 
 # To force the last line up above the horizontal scrollbar, because Eclipse has
