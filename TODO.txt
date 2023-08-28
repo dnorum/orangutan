@@ -1,8 +1,14 @@
-- ggplot (basic).
 - switch documentation over to markdown
 - add note about using .pgpass
 - 0.1.0 release.
+- refactor to use dedicated "surface" package for handling dimensional grid
 - add note about using mixture modeling instead of k-means
 - add instructions
-- ???
+- tidy up the plotting
+    - manual expansion of grid
+    - manual operation of interpolation
+    - add parameter for discrete step
+    - add de-rezzing of discrete data grid
+- add basic modeling functions
 - 0.2.0
+- ???
