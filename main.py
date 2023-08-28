@@ -4,8 +4,10 @@ import sys
 # Set up manual importing of under-development packages from within the repo.
 sys.path.append("python/packages/librarything")
 sys.path.append("python/packages/squirrel")
+sys.path.append("python/packages/vermeer")
 import librarything
 import squirrel
+import vermeer
 
 postgres = {}
 
@@ -50,11 +52,17 @@ librarything.convert_measure_fields(connection_settings, table, ["height", "thic
 
 # Pull out the dimensional data for plotting and fitting.
 export = librarything.export_dimensional_data(connection_settings, table, "discrete")
+
+# Prune - need to push this back upstream...
 for bin in export:
-    print(str(bin))
+    if bin.height >= 100:
+        export.remove(bin)
 
+# Plot!
+data = librarything.export_to_data(export)
+export_data_frame = vermeer.data_to_data_frame(data, ["height", "width", "thickness", "count"])
 
-
+plot = vermeer.create_interpolated_plot(data)
 
 
 # To force the last line up above the horizontal scrollbar, because Eclipse has
