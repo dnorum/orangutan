@@ -4,6 +4,9 @@ credentials/
 # Private/local data files
 data/
 
+# Local workspace.
+workspace/
+
 # BOILERPLATE BELOW
 # Byte-compiled / optimized / DLL files
 __pycache__/
