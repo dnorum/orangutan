@@ -1,5 +1,3 @@
-- switch documentation over to markdown
-- 0.1.0 release.
 - refactor to use dedicated "surface" package for handling dimensional grid
 - add note about using mixture modeling instead of k-means
 - add instructions
@@ -9,5 +7,5 @@
     - add parameter for discrete step
     - add de-rezzing of discrete data grid
 - add basic modeling functions
-- 0.2.0
-- ???
+- move postgres credentials / config into a dedicated function inside `postgres`
+- add standalone scripts for creating database and loading export
