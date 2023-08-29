@@ -4,10 +4,10 @@ import sys
 # Set up manual importing of under-development packages from within the repo.
 sys.path.append("python/packages/librarything")
 sys.path.append("python/packages/postgres")
-sys.path.append("python/packages/vermeer")
+sys.path.append("python/packages/plotting")
 import librarything
 import postgres
-import vermeer
+import plotting
 
 postgres = {}
 
@@ -60,9 +60,9 @@ for bin in export:
 
 # Plot!
 data = librarything.export_to_data(export)
-export_data_frame = vermeer.data_to_data_frame(data, ["height", "width", "thickness", "count"])
+export_data_frame = plotting.data_to_data_frame(data, ["height", "width", "thickness", "count"])
 
-plot = vermeer.create_interpolated_plot(data)
+plot = plotting.create_interpolated_plot(data)
 
 
 # To force the last line up above the horizontal scrollbar, because Eclipse has
