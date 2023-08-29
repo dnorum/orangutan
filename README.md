@@ -1,6 +1,8 @@
 - To set up the PostgreSQL user 'orangutan':
 > $ sudo -u postgres psql
+>
 > \# create user orangutan with encrypted password 'ook';
+>
 > \# ALTER USER orangutan CREATEDB;
 
 - I'm _attempting_ to follow the [Google Python Style Guide](https://google.github.io/styleguide/pyguide.html),
