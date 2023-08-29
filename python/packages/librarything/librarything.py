@@ -3,8 +3,8 @@ import psycopg
 from psycopg import sql
 import sys
 
-sys.path.append("../squirrel")
-import squirrel
+sys.path.append("../postgres")
+import postgres
 
 class SizeBin:
     def __init__(self, height, width, thickness, count):
@@ -32,9 +32,9 @@ def _load_snippet(function_name):
     return query_string
 
 def create_empty_bookstack(connection_settings, table):
-    squirrel.check_connection_database(connection_settings, table.schema.database)
+    postgres.check_connection_database(connection_settings, table.schema.database)
     with psycopg.connect(**connection_settings) as connection:
-        if squirrel.table_exists(connection_settings, table):
+        if postgres.table_exists(connection_settings, table):
             raise ValueError(f'{table.schema.name}.{table.name} already exists.')
         query_string = _load_snippet("create_empty_bookstack")
         query = sql.SQL(query_string).format(schema=sql.Identifier(table.schema.name),
@@ -44,7 +44,7 @@ def create_empty_bookstack(connection_settings, table):
 
 def import_bookstack(connection_settings, librarything_export, table):
     with psycopg.connect(**connection_settings) as connection:
-        if not squirrel.table_exists(connection_settings, table):
+        if not postgres.table_exists(connection_settings, table):
             raise ValueError(f'Table {table.name} does not exist.')
         with open(librarything_export, 'r') as librarything_export_file:
             with connection.cursor() as cursor:
@@ -58,11 +58,11 @@ def import_bookstack(connection_settings, librarything_export, table):
 def convert_measure_fields(connection_settings, table, columns, unit, suffix):
     with psycopg.connect(**connection_settings) as connection:
         connection.autocommit = True
-        if not squirrel.table_exists(connection_settings, table):
+        if not postgres.table_exists(connection_settings, table):
             raise ValueError(f'Table {table.name} does not exist.')
         for column in columns:
-            squirrel.rename_column(connection_settings, squirrel.Column(table, column), f"{column}{suffix}")
-            squirrel.add_column(connection_settings, squirrel.Column(table, column), "double")
+            postgres.rename_column(connection_settings, postgres.Column(table, column), f"{column}{suffix}")
+            postgres.add_column(connection_settings, postgres.Column(table, column), "double")
             with connection.cursor() as cursor:
                 query_string = _load_snippet(f"convert_measure_fields_{unit}")
                 query = sql.SQL(query_string).format(schema=sql.Identifier(table.schema.name),
@@ -75,7 +75,7 @@ def convert_measure_fields(connection_settings, table, columns, unit, suffix):
 def export_dimensional_data(connection_settings, table, continuity):
     with psycopg.connect(**connection_settings) as connection:
         connection.autocommit = True
-        if not squirrel.table_exists(connection_settings, table):
+        if not postgres.table_exists(connection_settings, table):
             raise ValueError(f'Table {table.name} does not exist.')
         # TODO: Add "continuous" setting, check for varieties..
         with connection.cursor() as cursor:
