@@ -1,5 +1,4 @@
 - switch documentation over to markdown
-- add note about using .pgpass
 - 0.1.0 release.
 - refactor to use dedicated "surface" package for handling dimensional grid
 - add note about using mixture modeling instead of k-means
