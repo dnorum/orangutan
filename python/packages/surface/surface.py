@@ -7,7 +7,8 @@ height, and total thickness, respectively).
 import fractions
 import math
 import numbers
-#import scipy
+import numpy
+import scipy.interpolate
 
 class Range:
     """The allowable or observed values for a variable.
@@ -187,6 +188,28 @@ def grid_from_ranges(ranges):
                     point = [coordinate, coordinates]
                 grid.append(point)
         return grid
+
+def split_for_interpolation(data, dimensions):
+    """Split a list of tuples (x1, ..., xn, f(x1, ..., xn)) into X and f(X).
+    """
+    points = []
+    values = []
+    for datum in data:
+        points.append(datum[:dimensions])
+        values.append(datum[dimensions:])
+    return {"points": points, "values": values}
+
+def interpolate_to_grid(data, dimensions, grid):
+    grist = split_for_interpolation(data, dimensions)
+    interp = scipy.interpolate.LinearNDInterpolator(numpy.asarray(grist["points"]), grist["values"])
+    interpolated_grid = []
+    for point in grid:
+        point.append(interp(point))
+        interpolated_grid.append(point)
+    return interpolated_grid
+
+
+
 
 
 # Eclipse scrollbar...

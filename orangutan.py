@@ -43,21 +43,12 @@ for bin in export:
     if bin.height >= 100:
         export.remove(bin)
 
-# Plot!
-#data = librarything.export_to_data(export)
+data = librarything.export_to_data(export)
+ranges = [surface.Range(min=0, max=24, inclusive=True, continuous=False, interval=0.0625),
+          surface.Range(min=0, max=24, inclusive=True, continuous=False, interval=0.0625)]
+grid = surface.grid_from_ranges(ranges)
+interpolated_grid = surface.interpolate_to_grid(data, 2, grid)
 
-range1 = surface.Range(min=0, max=2, inclusive=True, continuous=False, interval=1)
-range2 = surface.Range(min=0, max=2, inclusive=True, continuous=False, interval=1)
-ranges = [range1, range2]
-
-print(surface.grid_from_ranges(ranges))
-
-
-
-
-#export_data_frame = plotting.data_to_data_frame(data, ["height", "width", "thickness", "count"])
-
-#plot = plotting.create_interpolated_plot(data)
 
 
 
