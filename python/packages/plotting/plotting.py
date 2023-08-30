@@ -1,6 +1,5 @@
 import pandas
 from plotnine import *
-import scipy
 import numpy
 import matplotlib.pyplot as plt
 
@@ -40,12 +39,12 @@ def create_interpolated_plot(data):
     Y = numpy.linspace(y_min, y_max)
     X, Y = numpy.meshgrid(X, Y)
     Z = interp(X, Y)
-    #plot = (ggplot(data, aes(x="width", y="height", fill="thickness"))
-    #        + geom_tile(aes(width=.01625, height=.01625)))
-    #print(plot)
-    plt.pcolormesh(X, Y, Z, shading='auto')
-    plt.colorbar()
-    plt.show()
+    plot = (ggplot(data, aes(x="width", y="height", fill="thickness"))
+            + geom_tile(aes(width=.01625, height=.01625)))
+    print(plot)
+    #plt.pcolormesh(X, Y, Z, shading='auto')
+    #plt.colorbar()
+    #plt.show()
     return plot
 
 

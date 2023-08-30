@@ -4,10 +4,75 @@ Shelf sizes (depth, height, total length) depend on book dimensions (width,
 height, and total thickness, respectively).
 """
 
+import scipy
+
 class Range:
-    """A minimum and a maximum value for a value or dimension."""
-    # TODO: Add ", inclusive=True, continuous=False, interval=0"
-    def __init__(self, min, max):
+    """The allowable or observed values for a variable.
+    
+    Attributes:
+        min:
+            The smallest value allowable or observed. Must be strictly less
+            than max, unless inclusive=True, in which case it may equal max. 
+        max:
+            The largest value allowable or observed. Must be strictly greater
+            than min, unless inclusive=True, in which case it may equal min.
+        inclusive:
+            Boolean indicating whether or not the variable may be equal to min
+            or max, or strictly greater or less than (respectively). Defaults
+            to False.
+        continuous:
+            Boolean indicating whether or not the variable is continuous. If
+            continuous=False, then the following conditions must hold: (1)
+            interval is positive, (2) (min-max) % interval == 0. Defaults to
+            False.
+        interval:
+            The quantum of measurement for the variable. If continuous=True,
+            then interval should be ignored. (Currently required to be 0 in
+            these cases.) Defaults to 0 (cf. continuous=False). 
+    """
+    
+    def __init__(self, min, max, inclusive=True, continuous=False, interval=0):
+        """Initializes the range based on the min and max supplied.
+        
+        Args:
+            min: The smallest value allowable or observed.
+            max: The largest value allowable or observed.
+            inclusive: Defines if the instance is inclusive or exclusive.
+            continuous: Defines if the instance is continuous or discrete.
+            interval: Defines the quantum for discrete instances.  
+        """
         self.min = min
         self.max = max
+        self.inclusive = inclusive
+        self.continuous = continuous
+        self.interval = interval
+        
+        # Check for internal consistency.
+        if self.min > self.max:
+            raise ValueError(f"Maximum ({self.max}) must be greater than "
+                             f"minimum ({self.min}).")
+        if self.min == self.max and not inclusive:
+            raise ValueError(f"Maximum ({self.max}) and minimum ({self.min}) "
+                             "may only be equal when inclusive=True.")
+        if continuous:
+            if interval != 0:
+                raise ValueError(f"Non-zero ({self.interval}) interval is "
+                                 "prohibited for continuous ranges.")
+        elif not continuous:
+            if interval <= 0:
+                raise ValueError("Discrete ranges require a positive "
+                                 f"interval; {self.interval} specified.")
+            n = (self.max - self.min) / interval
+            if not n.is_integer():
+                raise ValueError("max-min must be an integer multiple of "
+                                 f"interval for discrete ranges: ({self.max} - "
+                                 f"{self.min}) / {self.interval} = {n}")
 
+#def complete_grid(ranges):
+#    """Returns an N-D array of points evenly spaced 
+
+#def interpolate(data, interval):
+    
+#    coords = []
+#    for point in data:
+        
