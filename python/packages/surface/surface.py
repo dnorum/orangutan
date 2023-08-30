@@ -67,6 +67,65 @@ class Range:
                 raise ValueError("max-min must be an integer multiple of "
                                  f"interval for discrete ranges: ({self.max} - "
                                  f"{self.min}) / {self.interval} = {n}")
+    
+    def expand(self):
+        """For a discrete range, returns the possible values from min to max.
+        
+        Returns:
+            An array of values evenly spaced by the interval of the range, from
+            min to max in order. If inclusive=True, then the first element will
+            be min and the last max; if inclusive=False, then the first element
+            will be min+interval and the last will be max-interval.
+            
+            (If inclusive=False and either min=max or min+interval=max, an
+            empty array will be returned.)
+            
+            For example, with min=0, max=3, inclusive=True, and interval=1:
+            [0, 1, 2, 3]
+            
+            With inclusive=False:
+            [1, 2]
+        """
+        if self.continuous:
+            raise ValueError("Cannot expand discrete range.")
+        if not self.continuous:
+            if self.inclusive:
+                values = [self.min]
+            else:
+                values = []
+            # Iterated addition of floating points can lead to weirdness, so
+            # we extract the number of decimal points from the interval and use
+            # it to round off the points as they're calculated..
+            precision = decimals(self.interval)
+            count = 1
+            value = self.min + count*self.interval
+            value = round(value, precision)
+            while value < self.max:
+                values.append(value)
+                value += self.interval
+                value = round(value, precision)
+            if self.inclusive:
+                values.append(self.max)
+        return values
+
+
+def decimals(number):
+    """Given a number, return the number of decimal places it has.
+    
+    Args:
+        number: An integer or floating point number.
+    
+    Returns:
+        0 for an integer or the number of digits after the decimal point for a
+        floating point number.
+    """
+    if isinstance(number, int):
+        return 0
+    if not isinstance(number, float):
+        raise ValueError(f"Number ({number}) must be integer or float, not "
+                         f"{type(number)}.")
+    if isinstance(number, float):
+        return str(number)[::-1].find('.')
 
 #def complete_grid(ranges):
 #    """Returns an N-D array of points evenly spaced 

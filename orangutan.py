@@ -46,7 +46,11 @@ for bin in export:
 # Plot!
 data = librarything.export_to_data(export)
 
-foo = surface.Range(min=0, max=1, inclusive=False, continuous=False, interval=0.3)
+foo = surface.Range(min=0, max=1, inclusive=False, continuous=False, interval=0.1)
+
+print(str(0.1))
+
+print(foo.expand())
 
 #export_data_frame = plotting.data_to_data_frame(data, ["height", "width", "thickness", "count"])
 
