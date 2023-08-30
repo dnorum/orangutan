@@ -1,9 +1,13 @@
 - expand surface subpackage:
+	- add checks for range()
 	- document range()
 	- finish and document \_\_str__
+	- function to return array dimensions
+	- function to check array rectilinearity
 	- function(s) to extract elements from array (good practice)
-	- function to extract ranges from array (single, then n)
-	- turn multiple ranges into a grid
+	- function to extract multiple ranges from array
+	- add checks to grid_from_ranges()
+	- document grid_from_ranges()
 	- create the interpolation
 	- apply the interpolation to the grid
     - add de-rezzing of discrete data grid

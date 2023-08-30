@@ -94,7 +94,7 @@ class Range:
             [1, 2]
         """
         if self.continuous:
-            raise ValueError("Cannot expand discrete range.")
+            raise ValueError("Cannot expand continuous range.")
         if not self.continuous:
             if self.inclusive:
                 values = [self.min]
@@ -135,6 +135,9 @@ def decimals(number):
         return str(number)[::-1].find('.')
 
 def range(data_1d, discretize=False, max_denominator=None, strict=False):
+    """Given a one-dimensional array of numbers, return the range.
+    
+    """
     # Check for data_1d.
     values = sorted(data_1d)
     min = values[0]
@@ -168,8 +171,22 @@ def range(data_1d, discretize=False, max_denominator=None, strict=False):
                     return Range(min=min, max=max, inclusive=True, continuous=True)
         return result
             
-    
-
+def grid_from_ranges(ranges):
+    grid = []
+    if len(ranges) == 1:
+        grid = ranges[0].expand()
+        return grid
+    if len(ranges) > 1:
+        axis = ranges[0].expand()
+        subspace = grid_from_ranges(ranges[1:])
+        for coordinate in axis:
+            for coordinates in subspace:
+                if hasattr(coordinates, "__len__"):
+                    point = [coordinate].append(coordinates)
+                else:
+                    point = [coordinate, coordinates]
+                grid.append(point)
+        return grid
 
 
 # Eclipse scrollbar...

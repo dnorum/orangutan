@@ -44,11 +44,15 @@ for bin in export:
         export.remove(bin)
 
 # Plot!
-data = librarything.export_to_data(export)
+#data = librarything.export_to_data(export)
 
-bar = surface.range(data_1d=[0, 2, 5, -1], discretize=True, strict=False)
+range1 = surface.Range(min=0, max=2, inclusive=True, continuous=False, interval=1)
+range2 = surface.Range(min=0, max=2, inclusive=True, continuous=False, interval=1)
+ranges = [range1, range2]
 
-print(bar)
+print(surface.grid_from_ranges(ranges))
+
+
 
 
 #export_data_frame = plotting.data_to_data_frame(data, ["height", "width", "thickness", "count"])
