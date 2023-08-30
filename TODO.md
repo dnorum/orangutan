@@ -1,11 +1,12 @@
-- refactor to use dedicated "surface" package for handling dimensional grid
+- expand surface subpackage:
+	- finish discretize()
+	- function(s) to extract elements from array (good practice)
+	- function to extract ranges from array (single, then n)
+	- turn multiple ranges into a grid
+	- create the interpolation
+	- apply the interpolation to the grid
+    - add de-rezzing of discrete data grid
+- tidy up the plotting
 - add note about using mixture modeling instead of k-means
 - add instructions
-- tidy up the plotting
-    - manual expansion of grid
-    - manual operation of interpolation
-    - add parameter for discrete step
-    - add de-rezzing of discrete data grid
 - add basic modeling functions
-- move postgres credentials / config into a dedicated function inside `postgres`
-- add standalone scripts for creating database and loading export

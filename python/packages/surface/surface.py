@@ -68,6 +68,11 @@ class Range:
                                  f"interval for discrete ranges: ({self.max} - "
                                  f"{self.min}) / {self.interval} = {n}")
     
+    def discretize(self, min_interval=1e-9):
+        """If possible, return the discrete version of the range.
+        
+        """ 
+    
     def expand(self):
         """For a discrete range, returns the possible values from min to max.
         
@@ -126,12 +131,3 @@ def decimals(number):
                          f"{type(number)}.")
     if isinstance(number, float):
         return str(number)[::-1].find('.')
-
-#def complete_grid(ranges):
-#    """Returns an N-D array of points evenly spaced 
-
-#def interpolate(data, interval):
-    
-#    coords = []
-#    for point in data:
-        
