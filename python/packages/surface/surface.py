@@ -7,7 +7,7 @@ height, and total thickness, respectively).
 import fractions
 import math
 import numbers
-import numpy
+#import numpy
 import scipy.interpolate
 
 class Range:
@@ -201,7 +201,7 @@ def split_for_interpolation(data, dimensions):
 
 def interpolate_to_grid(data, dimensions, grid):
     grist = split_for_interpolation(data, dimensions)
-    interp = scipy.interpolate.LinearNDInterpolator(numpy.asarray(grist["points"]), grist["values"])
+    interp = scipy.interpolate.LinearNDInterpolator(grist["points"], grist["values"])
     interpolated_grid = []
     for point in grid:
         point.append(interp(point))
