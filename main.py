@@ -1,4 +1,3 @@
-import json
 import sys
 
 # Set up manual importing of under-development packages from within the repo.
@@ -9,28 +8,21 @@ import librarything
 import plotting
 import postgres
 
-postgres = {}
+configuration = postgres.load_postgres_configuration(tranches=["config",
+                                                          "credentials"])
 
-for tranche in ("config", "credentials"):
-    with open(f"{tranche}/postgres.json") as json_file:
-        json_data = json.load(json_file)
-    for stage in json_data:
-        if stage not in postgres:
-            postgres[stage] = {}
-        postgres[stage] = {**postgres[stage], **json_data[stage]}
-
-database = postgres.Database(postgres["prod"]["database_name"])
-schema = postgres.Schema(database, postgres["prod"]["schema_name"])
-table = postgres.Table(schema, postgres["prod"]["table_name"])
+database = postgres.Database(configuration["prod"]["database_name"])
+schema = postgres.Schema(database, configuration["prod"]["schema_name"])
+table = postgres.Table(schema, configuration["prod"]["table_name"])
 
 # Log into bootstrapping environment to create production database.
-connection_settings = postgres.extract_connection_settings(postgres["bootstrap"])
+connection_settings = postgres.extract_connection_settings(configuration["bootstrap"])
 # Wrapper for idempotent development re-runs.
 if not postgres.database_exists(connection_settings, database):
     postgres.create_database(connection_settings, database)
 
 # Switch to production and create the schema.
-connection_settings = postgres.extract_connection_settings(postgres["prod"])
+connection_settings = postgres.extract_connection_settings(configuration["prod"])
 
 # Ensure that there's no cruft left over from previous development runs.
 postgres.drop_schema_if_exists(connection_settings, schema)

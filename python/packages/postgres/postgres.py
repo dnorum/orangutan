@@ -1,3 +1,4 @@
+import json
 import pkgutil
 import psycopg
 from psycopg import sql
@@ -26,6 +27,17 @@ def _load_snippet(function_name):
     query_bytes = pkgutil.get_data(__name__, f'sql/{function_name}.sql')
     query_string = query_bytes.decode()
     return query_string
+
+def load_postgres_configuration(tranches):
+    configuration = {}
+    for tranche in tranches:
+        with open(f"{tranche}/postgres.json") as json_file:
+            json_data = json.load(json_file)
+        for stage in json_data:
+            if stage not in configuration:
+                configuration[stage] = {}
+            configuration[stage] = {**configuration[stage], **json_data[stage]}
+    return configuration
 
 def check_connection_database(connection_settings, database):
     if not connection_settings["dbname"] == database.name:
