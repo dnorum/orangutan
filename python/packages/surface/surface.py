@@ -4,7 +4,10 @@ Shelf sizes (depth, height, total length) depend on book dimensions (width,
 height, and total thickness, respectively).
 """
 
-import scipy
+import fractions
+import math
+import numbers
+#import scipy
 
 class Range:
     """The allowable or observed values for a variable.
@@ -68,10 +71,9 @@ class Range:
                                  f"interval for discrete ranges: ({self.max} - "
                                  f"{self.min}) / {self.interval} = {n}")
     
-    def discretize(self, min_interval=1e-9):
-        """If possible, return the discrete version of the range.
-        
-        """ 
+    def __str__(self):
+        return (f"min={self.min}, max={self.max}, inclusive={self.inclusive}, "
+                f"continuous={self.continuous}, interval={self.interval}")
     
     def expand(self):
         """For a discrete range, returns the possible values from min to max.
@@ -131,3 +133,43 @@ def decimals(number):
                          f"{type(number)}.")
     if isinstance(number, float):
         return str(number)[::-1].find('.')
+
+def range(data_1d, discretize=False, max_denominator=None, strict=False):
+    # Check for data_1d.
+    values = sorted(data_1d)
+    min = values[0]
+    max = values[-1]
+    if not discretize:
+        return Range(min=min, max=max, inclusive=True, continuous=True)
+    if discretize:
+        interval_possible = fractions.Fraction(max - min)
+        for value in values[1:]:
+            delta = fractions.Fraction(value - min)
+            # Put the current possible interval and the offset from the min into
+            # the same denominator, then find the GCD of their new numerators.
+            denominator = interval_possible.denominator * delta.denominator
+            numerator = math.gcd(
+                interval_possible.numerator * delta.denominator, 
+                delta.numerator * interval_possible.denominator)
+            cancellation = math.gcd(denominator, numerator)
+            numerator = numerator / cancellation
+            denominator = denominator / cancellation
+            if max_denominator != None and denominator > max_denominator:
+                return Range(min=min, max=max, inclusive=True, continuous=True)
+            interval_possible = fractions.Fraction(str(int(numerator)) + '/' +
+                                                   str(int(denominator)))
+        interval_possible = interval_possible.numerator / interval_possible.denominator
+        result = Range(min=min, max=max, inclusive=True, continuous=False,
+                       interval=interval_possible)
+        if strict:
+            rederived_values = result.expand()
+            for value in values:
+                if value not in rederived_values:
+                    return Range(min=min, max=max, inclusive=True, continuous=True)
+        return result
+            
+    
+
+
+
+# Eclipse scrollbar...

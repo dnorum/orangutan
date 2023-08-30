@@ -1,5 +1,6 @@
 - expand surface subpackage:
-	- finish discretize()
+	- document range()
+	- finish and document \_\_str__
 	- function(s) to extract elements from array (good practice)
 	- function to extract ranges from array (single, then n)
 	- turn multiple ranges into a grid
