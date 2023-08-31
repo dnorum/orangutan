@@ -4,7 +4,7 @@ from psycopg import sql
 import sys
 
 sys.path.append("../postgres")
-import postgres.postgres as postgres
+import postgres
 
 class SizeBin:
     def __init__(self, height, width, thickness, count):

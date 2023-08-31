@@ -3,7 +3,7 @@ import sys
 # Set up manual importing of under-development package from within the repo.
 sys.path.append("orangutan")
 import orangutan
-import orangutan.postgres.postgres as postgres
+import orangutan.postgres as postgres
 import orangutan.plotting.plotting as plotting
 import orangutan.librarything.librarything as librarything
 import orangutan.surface.surface as surface
@@ -24,16 +24,6 @@ export = librarything.export_dimensional_data(connection_settings, table, "discr
 for bin in export:
     if bin.height >= 100:
         export.remove(bin)
-
-data = librarything.export_to_data(export)
-ranges = [surface.Range(min=0, max=24, inclusive=True, continuous=False, interval=0.0625),
-          surface.Range(min=0, max=24, inclusive=True, continuous=False, interval=0.0625)]
-grid = surface.grid_from_ranges(ranges)
-interpolated_grid = surface.interpolate_to_grid(data, 2, grid)
-plot = plotting.create_plot(interpolated_grid, ["height", "width", "thickness"])
-
-plot.draw(show=True)
-plot.save("workspace/plot.png")
 
 data = librarything.export_to_data(export)
 ranges = [surface.Range(min=0, max=24, inclusive=True, continuous=False, interval=0.0625),
