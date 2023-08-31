@@ -3,8 +3,8 @@ import sys
 # Set up manual importing of under-development package from within the repo.
 sys.path.append("orangutan")
 import orangutan
-import orangutan.postgres as postgres
-import orangutan.plotting.plotting as plotting
+from orangutan import postgres
+from orangutan import plotting
 import orangutan.librarything.librarything as librarything
 import orangutan.surface.surface as surface
 

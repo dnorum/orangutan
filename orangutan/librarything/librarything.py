@@ -3,28 +3,10 @@ import psycopg
 from psycopg import sql
 import sys
 
+from .classes import SizeBin
+
 sys.path.append("../postgres")
 import postgres
-
-class SizeBin:
-    def __init__(self, height, width, thickness, count):
-        self.height = height
-        self.width = width
-        self.thickness = thickness
-        self.count = count
-    
-    def _to_row(self):
-        row = []
-        row.append(self.height)
-        row.append(self.width)
-        row.append(self.thickness)
-        #row.append(self.count)
-        return row
-    
-    def __str__(self):
-        representation = (f"(Height={self.height}, Width={self.width}: "
-                          f"Thickness={self.thickness}, Count={self.count}")
-        return representation
 
 def _load_snippet(function_name):
     query_bytes = pkgutil.get_data(__name__, f'sql/{function_name}.sql')

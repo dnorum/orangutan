@@ -1,4 +1,4 @@
-from .objects import Database, Schema, Table, Column
+from .classes import Database, Schema, Table, Column
 
 from .common import _load_snippet
 
