@@ -1,0 +1,1 @@
+from .module_resources import load_snippet

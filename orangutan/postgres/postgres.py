@@ -3,6 +3,10 @@ import psycopg
 from psycopg import sql
 import re
 
+import sys
+sys.path.append("../common")
+from common import load_snippet
+
 def load_postgres_configuration(tranches):
     configuration = {}
     for tranche in tranches:
@@ -19,8 +23,11 @@ def drop_schema_if_exists(connection_settings, schema):
     with psycopg.connect(**connection_settings) as connection:
         connection.autocommit = True
         with connection.cursor() as cursor:
-            query_string = _load_snippet("drop_schema_if_exists")
-            query = sql.SQL(query_string).format(schema=sql.Identifier(schema.name))
+            query_string = load_snippet(
+                module=__name__,
+                resource="sql/drop_schema_if_exists.sql")
+            query = sql.SQL(query_string).format(schema=
+                                                 sql.Identifier(schema.name))
             cursor.execute(query)
     return 0
 
@@ -32,16 +39,18 @@ def rename_column(connection_settings, column, name):
             if not column_exists(connection_settings, column):
                 raise ValueError(f"Column '{column.name}' doesn't exist.")
             else:
-                query_string = _load_snippet("rename_column")
-                query = sql.SQL(query_string).format(schema=sql.Identifier(column.table.schema.name),
-                                                     table=sql.Identifier(column.table.name),
-                                                     column=sql.Identifier(column.name),
-                                                     name=sql.Identifier(name))
+                query_string = load_snippet(module=__name__,
+                                            resource="sql/rename_column.sql")
+                query = sql.SQL(query_string).format(
+                    schema=sql.Identifier(column.table.schema.name),
+                    table=sql.Identifier(column.table.name),
+                    column=sql.Identifier(column.name),
+                    name=sql.Identifier(name))
                 cursor.execute(query)
     return 0
-
-
-
-
-
+# 1
+# 2
+# 3
+# 4
+# 5
 # Eclipse scrollbar...

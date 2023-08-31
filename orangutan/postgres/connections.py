@@ -12,9 +12,9 @@ def extract_connection_settings(postgres):
     connection_settings["dbname"] = connection_settings["database_name"]
     del connection_settings["database_name"]
     return connection_settings    
-
-
-
-
-
+# 1
+# 2
+# 3
+# 4
+# 5
 # Eclipse scrollbar...

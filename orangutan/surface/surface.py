@@ -169,14 +169,15 @@ def range(data_1d, discretize=False, max_denominator=None, strict=False):
                 return Range(min=min, max=max, inclusive=True, continuous=True)
             interval_possible = fractions.Fraction(str(int(numerator)) + '/' +
                                                    str(int(denominator)))
-        interval_possible = interval_possible.numerator / interval_possible.denominator
+        interval = interval_possible.numerator / interval_possible.denominator
         result = Range(min=min, max=max, inclusive=True, continuous=False,
-                       interval=interval_possible)
+                       interval=interval)
         if strict:
             rederived_values = result.expand()
             for value in values:
                 if value not in rederived_values:
-                    return Range(min=min, max=max, inclusive=True, continuous=True)
+                    return Range(min=min, max=max, inclusive=True,
+                                 continuous=True)
         return result
             
 def grid_from_ranges(ranges):
@@ -208,7 +209,8 @@ def split_for_interpolation(data, dimensions):
 
 def interpolate_to_grid(data, dimensions, grid):
     grist = split_for_interpolation(data, dimensions)
-    interp = scipy.interpolate.LinearNDInterpolator(grist["points"], grist["values"])
+    interp = scipy.interpolate.LinearNDInterpolator(grist["points"],
+                                                    grist["values"])
     interpolated_grid = []
     for point in grid:
         values = interp(point)[0]
@@ -219,9 +221,9 @@ def interpolate_to_grid(data, dimensions, grid):
 
 def find_extrema(surface):
     pass
-
-
-
-
-
+# 1
+# 2
+# 3
+# 4
+# 5
 # Eclipse scrollbar...
