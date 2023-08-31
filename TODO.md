@@ -1,3 +1,6 @@
+- clean up loading of configuration and credentials
+- separate out top-level scripts / tasks
+- move orangutan into primus inter pares package structure
 - expand surface subpackage:
 	- add checks for range()
 	- document range()
@@ -8,8 +11,6 @@
 	- function to extract multiple ranges from array
 	- add checks to grid_from_ranges()
 	- document grid_from_ranges()
-	- create the interpolation
-	- apply the interpolation to the grid
     - add de-rezzing of discrete data grid
 - tidy up the plotting
 - add note about using mixture modeling instead of k-means
