@@ -116,6 +116,13 @@ class Range:
                 values.append(self.max)
         return values
 
+class Surface:
+    def __init__(self, ranges, points):
+        self.ranges = ranges
+        self.points = points
+    
+    def adjacent(self, point):
+        pass
 
 def decimals(number):
     """Given a number, return the number of decimal places it has.
@@ -204,9 +211,14 @@ def interpolate_to_grid(data, dimensions, grid):
     interp = scipy.interpolate.LinearNDInterpolator(grist["points"], grist["values"])
     interpolated_grid = []
     for point in grid:
-        point.append(interp(point))
+        values = interp(point)[0]
+        for value in values:
+            point.append(value)
         interpolated_grid.append(point)
     return interpolated_grid
+
+def find_extrema(surface):
+    pass
 
 
 

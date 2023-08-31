@@ -18,7 +18,7 @@ class SizeBin:
         row.append(self.height)
         row.append(self.width)
         row.append(self.thickness)
-        row.append(self.count)
+        #row.append(self.count)
         return row
     
     def __str__(self):

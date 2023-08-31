@@ -48,7 +48,10 @@ ranges = [surface.Range(min=0, max=24, inclusive=True, continuous=False, interva
           surface.Range(min=0, max=24, inclusive=True, continuous=False, interval=0.0625)]
 grid = surface.grid_from_ranges(ranges)
 interpolated_grid = surface.interpolate_to_grid(data, 2, grid)
+plot = plotting.create_plot(interpolated_grid, ["height", "width", "thickness"])
 
+plot.draw(show=True)
+plot.save("workspace/plot.png")
 
 
 
