@@ -8,18 +8,13 @@ from orangutan import plotting
 from orangutan import postgres
 from orangutan import surface
 
-# Main testing portion.
 dir = pathlib.Path(__file__).parent.resolve()
 configuration = common.load_json_configurations(
     [f"{dir}/config/postgres.json",
     f"{dir}/credentials/postgres.json"])
-
-print(configuration)
-
 database = postgres.Database(configuration["prod"]["database_name"])
 schema = postgres.Schema(database, configuration["prod"]["schema_name"])
 table = postgres.Table(schema, configuration["prod"]["table_name"])
-#create_library_database(configuration, "data/librarything_dnorum.csv")
 
 # Pull out the dimensional data for plotting and fitting.
 connection_settings = postgres.extract_connection_settings(configuration["prod"])
