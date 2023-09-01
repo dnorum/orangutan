@@ -1,6 +1,6 @@
 import sys
 sys.path.append("../common")
-from common import decimals
+import common
 
 class Range:
     """The allowable or observed values for a variable.
@@ -96,7 +96,7 @@ class Range:
             # Iterated addition of floating points can lead to weirdness, so
             # we extract the number of decimal points from the interval and use
             # it to round off the points as they're calculated..
-            precision = decimals(self.interval)
+            precision = common.decimals(self.interval)
             count = 1
             value = self.min + count*self.interval
             value = round(value, precision)
@@ -114,19 +114,30 @@ class Surface:
     def __init__(self, ranges, points):
         self.ranges = ranges
         self.points = points
+        self.dimensions = len(self.ranges)
+    
+    def _coordinates(self):
+        coordinates = []
+        for point in self.points:
+            coordinates.append(point[:self.dimensions])
+        return coordinates
     
     def adjacent(self, point):
+        coordinates = self._coordinates()
         adjacent_points = [point]
-        for range_dimension, range in enumerate(ranges):
+        for range_dimension, range in enumerate(self.ranges):
             jacent_points = common.copy(adjacent_points)
-            for point in jacent_points:
+            for jacent_point in jacent_points:
                 for shift in [-1, 1]:
-                    adjacent_point = point
+                    adjacent_point = common.copy(jacent_point)
                     adjacent_point[range_dimension] += shift * range.interval 
                     adjacent_points.append(adjacent_point)
-        #for point in adjacent_points:
-            
-        pass
+        points = common.copy(adjacent_points)
+        for adjacent_point in points:
+            if adjacent_point[:self.dimensions] not in coordinates:
+                adjacent_points.remove(adjacent_point)       
+        adjacent_points.remove(point)
+        return adjacent_points
 # 1
 # 2
 # 3
