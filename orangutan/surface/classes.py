@@ -104,6 +104,8 @@ class Range:
                 values.append(value)
                 value += self.interval
                 value = round(value, precision)
+            # Mildly inelegant, but clearer than potentially running into
+            # [].insert(-1,value).
             if self.inclusive:
                 values.append(self.max)
         return values

@@ -1,3 +1,5 @@
+- **determine data structures for surfaces**
+
 - ab initio startup script
 - expand surface subpackage:
 	- add checks for range()
