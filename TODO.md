@@ -1,5 +1,6 @@
 - **determine data structures for surfaces**
-
+- define adjacency function for _region_.
+- define equipotential function starting with point.
 - ab initio startup script
 - expand surface subpackage:
 	- add checks for range()
