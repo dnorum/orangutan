@@ -34,6 +34,8 @@ interpolated_grid = surface.interpolate_to_grid(data, 2, grid)
 extrema = surface.find_extrema(surface.Surface(ranges=ranges,
                                                points=interpolated_grid))
 
+print(extrema)
+
 #plot = plotting.create_plot(interpolated_grid, ["height", "width", "thickness"])
 
 #plot.draw(show=True)

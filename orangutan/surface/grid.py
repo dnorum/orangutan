@@ -58,6 +58,26 @@ def grid_from_ranges(ranges):
 
 def find_extrema(surface):
     extrema = []
+    for point in surface.points:
+        value = point[surface.dimensions:]
+        adjacent_points = surface.adjacent(point)
+        peak = True
+        valley = True
+        plateau = False
+        for adjacent_point in adjacent_points:
+            adjacent_value = adjacent_point[surface.dimensions:]
+            if adjacent_value > value:
+                peak = False 
+            if adjacent_value < value:
+                valley = False
+            if adjacent_value == value:
+                plateau = True
+        if peak:
+            if not plateau:
+                extrema.append(Extremum([point], "maximum"))
+        if valley:
+            if not plateau:
+                extrema.append(Extremum([point], "minimum"))
     return extrema
 # 1
 # 2

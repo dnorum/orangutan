@@ -138,6 +138,11 @@ class Surface:
                 adjacent_points.remove(adjacent_point)       
         adjacent_points.remove(point)
         return adjacent_points
+
+class Extremum:
+    def __init__(self, region, nature):
+        self.region = region
+        self.nature = nature
 # 1
 # 2
 # 3
