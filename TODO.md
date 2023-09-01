@@ -1,3 +1,4 @@
+- ab initio startup script
 - expand surface subpackage:
 	- add checks for range()
 	- document range()
@@ -6,6 +7,7 @@
 	- function to check array rectilinearity
 	- function(s) to extract elements from array (good practice)
 	- function to extract multiple ranges from array
+	- function to prune dimensional export
 	- add checks to grid_from_ranges()
 	- document grid_from_ranges()
     - add de-rezzing of discrete data grid

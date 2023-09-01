@@ -114,6 +114,16 @@ class Surface:
         self.points = points
     
     def adjacent(self, point):
+        adjacent_points = [point]
+        for range_dimension, range in enumerate(ranges):
+            jacent_points = common.copy(adjacent_points)
+            for point in jacent_points:
+                for shift in [-1, 1]:
+                    adjacent_point = point
+                    adjacent_point[range_dimension] += shift * range.interval 
+                    adjacent_points.append(adjacent_point)
+        #for point in adjacent_points:
+            
         pass
 # 1
 # 2

@@ -57,7 +57,8 @@ def grid_from_ranges(ranges):
         return grid
 
 def find_extrema(surface):
-    pass
+    extrema = []
+    return extrema
 # 1
 # 2
 # 3
