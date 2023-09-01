@@ -5,12 +5,18 @@ class SizeBin:
         self.thickness = thickness
         self.count = count
     
-    def _to_row(self):
+    def _to_row(self, height=True, width=True, thickness=True, count=True):
+        if not (height or width or thickness or count):
+            return None
         row = []
-        row.append(self.height)
-        row.append(self.width)
-        row.append(self.thickness)
-        #row.append(self.count)
+        if height:
+            row.append(self.height)
+        if width:
+            row.append(self.width)
+        if thickness:
+            row.append(self.thickness)
+        if count:
+            row.append(self.count)
         return row
     
     def __str__(self):
