@@ -1,17 +1,21 @@
-import sys
+import pathlib
 
-# Set up manual importing of under-development package from within the repo.
-sys.path.append("orangutan")
-import orangutan
+from context import orangutan
+
 from orangutan import common
-from orangutan import postgres
+from orangutan import librarything
 from orangutan import plotting
-import orangutan.librarything.librarything as librarything
-import orangutan.surface.surface as surface
+from orangutan import postgres
+from orangutan import surface
 
 # Main testing portion.
-configuration = postgres.load_postgres_configuration(tranches=["config",
-                                                          "credentials"])
+dir = pathlib.Path(__file__).parent.resolve()
+configuration = common.load_json_configurations(
+    [f"{dir}/config/postgres.json",
+    f"{dir}/credentials/postgres.json"])
+
+print(configuration)
+
 database = postgres.Database(configuration["prod"]["database_name"])
 schema = postgres.Schema(database, configuration["prod"]["schema_name"])
 table = postgres.Table(schema, configuration["prod"]["table_name"])
@@ -35,9 +39,9 @@ plot = plotting.create_plot(interpolated_grid, ["height", "width", "thickness"])
 
 plot.draw(show=True)
 plot.save("workspace/plot.png")
-
-
-
-
-
+# 1
+# 2
+# 3
+# 4
+# 5
 # Eclipse scrollbar...

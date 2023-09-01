@@ -1,10 +1,11 @@
-import sys
-
 # Set up manual importing of under-development sub-packages from within the repo.
+import sys
+sys.path.append("common")
 sys.path.append("librarything")
 sys.path.append("plotting")
 sys.path.append("postgres")
 sys.path.append("surface")
+import common
 import librarything
 import plotting
 import postgres
@@ -25,9 +26,9 @@ def create_library_database(configuration, file):
     librarything.import_bookstack(connection_settings, file, table)
     # Convert the length measurement fields.
     librarything.convert_measure_fields(connection_settings, table, ["height", "thickness", "width"], "inch", "_str")
-
-
-
-
-
+# 1
+# 2
+# 3
+# 4
+# 5
 # Eclipse scrollbar...

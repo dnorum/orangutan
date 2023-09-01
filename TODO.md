@@ -1,7 +1,3 @@
-- shift \_\_name__ argument out of definition of _load_snippet to allow for reusability.
-- clean up loading of configuration and credentials
-- separate out top-level scripts / tasks
-- move orangutan into primus inter pares package structure
 - expand surface subpackage:
 	- add checks for range()
 	- document range()
