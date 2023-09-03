@@ -1,3 +1,4 @@
+- tweak gitignore to only ignore _development_ slash local data and credentials - allow /sample versions.
 - **determine data structures for surfaces**
 - define adjacency function for _region_.
 - define equipotential function starting with point.
