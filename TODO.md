@@ -1,3 +1,4 @@
+- tweak gitignore to only ignore _development_ slash local data and credentials - allow /sample versions.
 - **determine data structures for surfaces**
     - include some sort of conversion to array
 - define adjacency function for _region_.
