@@ -1,8 +1,5 @@
-# Credentials
-credentials/
-
-# Private/local data files
-data/
+# Private/local data files and credentials.
+*dnorum*
 
 # Local workspace.
 workspace/
