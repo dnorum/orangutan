@@ -10,8 +10,8 @@ from orangutan import surface
 
 dir = pathlib.Path(__file__).parent.resolve()
 configuration = common.load_json_configurations(
-    [f"{dir}/config/postgres.json",
-    f"{dir}/credentials/postgres.json"])
+    [f"{dir}/config/postgres_dnorum.json",
+    f"{dir}/credentials/postgres_dnorum.json"])
 database = postgres.Database(configuration["prod"]["database_name"])
 schema = postgres.Schema(database, configuration["prod"]["schema_name"])
 table = postgres.Table(schema, configuration["prod"]["table_name"])
@@ -22,17 +22,37 @@ export = librarything.export_dimensional_data(connection_settings, table, "discr
 
 # Prune - need to push this back upstream...
 for bin in export:
-    if bin.height >= 100:
+    if bin.height >= 100 or bin.height < 2 or bin.width < 1:
         export.remove(bin)
 
 data = librarything.export_to_data(export)
-ranges = [surface.Range(min=0, max=24, inclusive=True, continuous=False, interval=0.0625),
-          surface.Range(min=0, max=24, inclusive=True, continuous=False, interval=0.0625)]
+
+height_min = 100
+height_max = 0
+width_min = 100
+width_max = 0
+for datum in data:
+    if datum[0] < height_min:
+        height_min = datum[0]
+    if datum[0] > height_max:
+        height_max = datum[0]
+    if datum[1] < width_min:
+        width_min = datum[1]
+    if datum[1] > width_max:
+        width_max = datum[1]
+
+print(height_min)
+print(height_max)
+print(width_min)
+print(width_max)
+
+ranges = [surface.Range(min=height_min, max=height_max, inclusive=True, continuous=False, interval=0.0625),
+          surface.Range(min=width_min, max=width_max, inclusive=True, continuous=False, interval=0.0625)]
 grid = surface.grid_from_ranges(ranges)
 interpolated_grid = surface.interpolate_to_grid(data, 2, grid)
 
-extrema = surface.find_extrema(surface.Surface(ranges=ranges,
-                                               points=interpolated_grid))
+interpolated_surface = surface.Surface(ranges=ranges, points=interpolated_grid)
+extrema = surface.find_extrema(interpolated_surface)
 
 print(extrema)
 
